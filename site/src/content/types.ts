@@ -25,3 +25,4 @@ export type Project = {
 export type Bureau = { id: string; org: string; role: string; dates: string; summary: string };
 export type Ad = { id: string; headline: string; body: string; cta: string; href: string };
 export type Award = { id: string; title: string; credit: string; year: number };
+export type ProjectDetails = { problem: string; approach: string; result: string; stack: string[] };
