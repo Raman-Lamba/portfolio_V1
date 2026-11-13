@@ -11,5 +11,10 @@ describe('Letters', () => {
     expect(screen.getByRole('link', { name: site.email })).toHaveAttribute('href', `mailto:${site.email}`);
     expect(screen.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute('href', site.linkedin);
     expect(screen.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', site.github);
+    for (const name of ['LinkedIn', 'GitHub']) {
+      const a = screen.getByRole('link', { name });
+      expect(a).toHaveAttribute('target', '_blank');
+      expect(a).toHaveAttribute('rel', 'noopener noreferrer');
+    }
   });
 });

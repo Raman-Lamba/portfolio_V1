@@ -46,12 +46,12 @@ export function ResumePage() {
           </a>
         </li>
         <li>
-          <a href={site.linkedin} className="underline">
+          <a href={site.linkedin} className="underline" target="_blank" rel="noopener noreferrer">
             LinkedIn
           </a>
         </li>
         <li>
-          <a href={site.github} className="underline">
+          <a href={site.github} className="underline" target="_blank" rel="noopener noreferrer">
             GitHub
           </a>
         </li>

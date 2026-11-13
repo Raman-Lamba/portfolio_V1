@@ -16,5 +16,10 @@ describe('ResumePage', () => {
     }
     expect(screen.getByRole('link', { name: /Download PDF/ })).toHaveAttribute('href', site.resumePdf);
     expect(screen.getByRole('link', { name: site.email })).toHaveAttribute('href', `mailto:${site.email}`);
+    for (const name of ['LinkedIn', 'GitHub']) {
+      const a = screen.getByRole('link', { name });
+      expect(a).toHaveAttribute('target', '_blank');
+      expect(a).toHaveAttribute('rel', 'noopener noreferrer');
+    }
   });
 });

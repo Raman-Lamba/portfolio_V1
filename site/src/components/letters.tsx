@@ -19,12 +19,12 @@ export function Letters() {
           </a>
         </li>
         <li>
-          <a href={site.linkedin} className={link}>
+          <a href={site.linkedin} className={link} target="_blank" rel="noopener noreferrer">
             LinkedIn
           </a>
         </li>
         <li>
-          <a href={site.github} className={link}>
+          <a href={site.github} className={link} target="_blank" rel="noopener noreferrer">
             GitHub
           </a>
         </li>

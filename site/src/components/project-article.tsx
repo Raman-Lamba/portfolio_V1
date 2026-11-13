@@ -25,7 +25,7 @@ export function ProjectArticle({
       <p className="mt-2 font-body text-lg italic">{project.credit}</p>
       {figures.length === 0 && <HalftonePlate caption={`${project.title}, ${project.year}`} />}
       <p className="mt-4 font-body text-lg leading-relaxed">{project.deck}</p>
-      <h2 className="sr-only">Key figures</h2>
+      {project.metrics.length > 0 && <h2 className="sr-only">Key figures</h2>}
       <NumbersBox metrics={project.metrics} />
       {details && (
         <>

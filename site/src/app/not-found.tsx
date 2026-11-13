@@ -1,5 +1,8 @@
+import type { Metadata } from 'next';
 import { BackBar } from '@/components/back-bar';
 import { Footer } from '@/components/footer';
+
+export const metadata: Metadata = { title: 'Page not found | Raman Lamba' };
 
 export default function NotFound() {
   return (
