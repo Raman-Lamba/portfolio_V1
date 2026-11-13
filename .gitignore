@@ -1,0 +1,18 @@
+# secrets
+.env
+.env.*
+!.env.example
+# build / deps
+node_modules/
+.next/
+out/
+.vercel/
+# local tooling
+.superpowers/
+.claude/settings.local.json
+# original resume with phone number: never publish
+resume/RamanLamba_Resume.pdf
+# OS
+desktop.ini
+.DS_Store
+*.log
