@@ -8,22 +8,24 @@
 
 **Tech Stack:** Next.js 16 (App Router, Cache Components on), Tailwind v4 tokens, Vitest + Testing Library. No new dependency (the `motion` library arrives in plan 3b).
 
-Spec: `docs/superpowers/specs/2026-11-13-portfolio-design.md` (sections 3, 6-8). Plan 3b (folder opening, fan-out, focus-and-dim, grain stacking, back pill) follows. Real project images are not in this plan: pages reuse the halftone plate until the owner supplies screenshots.
+Spec: `docs/superpowers/specs/2026-11-13-portfolio-design.md` (sections 3, 6-8). Plan 3b (folder opening, fan-out, focus-and-dim, grain stacking, back pill) follows. Real project screenshots (Project_SS) appear as captioned figures on the project pages; pages without screenshots keep the halftone plate. Reusing them as clippings in the folders is plan 3b.
 
 ## Global Constraints
 - **Read `site/AGENTS.md` first.** Next.js 16 specifics relevant here (from the bundled docs): `params` is a `Promise` (`const { slug } = await params`); `generateStaticParams` returns `{ slug: string }[]`; `notFound()` from `next/navigation` renders the 404; metadata via `generateMetadata`. Cache Components is on: no `new Date()` in server components.
 - Tokens only (`bg-paper`, `bg-ink`, `text-paper`, `bg-ink/10`-style, `text-ink`, `border-ink`, `text-accent`, `font-display/body/label/mono`). No hex colours, no new fonts.
 - Heading outline per page: exactly one `h1`; sections are `h2`; items `h3`. Page `main` has `id="main"` (the skip link targets it).
 - Content only from `site/src/content/*`, except fixed labels (page chrome, "The problem", "The approach", "The result", "Built with", "Key figures", "Front page", "Page not found").
-- Write-up copy in `details.ts` uses only the verified facts given in this plan. The owner must confirm the Options Strategy Simulator status wording before launch.
+- Write-up copy in `details.ts` uses only the verified facts given in this plan. The Options Strategy Simulator is a finished app (confirmed by the owner and its screenshots).
 - UBS appears only as a result; no description of the competition problem or solution. No phone number anywhere (the résumé page must not show one). No secrets. No new dependency.
+- No personal email or other private detail may be visible in any published image (the college email in the lecture-hall screenshot must be cropped out; verify by viewing each cropped file).
+- Image captions describe what the figure shows and claim no more (the uncertainty-calibration plot is nearly flat; caption it as a diagnostic).
 - External links use `target="_blank"` with `rel="noopener noreferrer"`. Decorative glyphs (arrows) are `aria-hidden`.
 - Commit trailers: end every commit with a `Claude-Session: https://claude.ai/code/session_018QB7mo8gTaSmrUpoNJB9Sc` line and a `Co-Authored-By: Claude <your own model name> <noreply@anthropic.com>` line (the actual author model is accepted).
 - Run commands from `C:\Users\DeLL\Desktop\Portfolio\site` unless stated. Work on branch `phase3a-work-and-resume-pages` (the controller creates it from `main`).
 
 ## File Structure
 - Modify: `components/ad.tsx`, `classifieds.tsx`, `front-page.tsx` (+ tests), `content/about.ts`, `content/types.ts`, `content/queries.ts` (+ test).
-- Create: `content/details.ts`, `content/details.test.ts`, `content/resume-full.ts`, `content/resume-full.test.ts`.
+- Create: `content/details.ts`, `content/details.test.ts`, `content/figures.ts`, `content/figures.test.ts`, `content/resume-full.ts`, `content/resume-full.test.ts`; images under `site/public/images/projects/`.
 - Create components: `back-bar.tsx`, `project-article.tsx`, `resume-page.tsx` (+ tests).
 - Create routes: `app/work/[slug]/page.tsx` (+ test), `app/not-found.tsx` (+ test), `app/resume/page.tsx` (+ test).
 
@@ -256,24 +258,205 @@ cd .. && git add site/src/content && git commit -m "feat: add project write-ups 
 
 ---
 
-### Task 3: Project pages, back bar and 404 (TDD)
+### Task 3: Project figures (images, content, tests)
+
+**Files:**
+- Create: `site/public/images/projects/*.png` (copied/cropped), `site/src/content/figures.ts`
+- Modify: `site/src/content/types.ts`, `site/src/content/queries.ts`
+- Test: `site/src/content/figures.test.ts`
+
+**Interfaces:**
+- Produces: `ProjectFigure = { src: string; alt: string; caption: string; width: number; height: number }` (types.ts); `projectFigures: Record<string, ProjectFigure[]>` (figures.ts, keyed by project slug); `getFigures(slug: string): ProjectFigure[]` (queries.ts, empty array when none).
+
+Source images are in `C:\Users\DeLL\Desktop\Portfolio\Project_SS\` (read-only originals, never modified or committed). Published copies go to `site/public/images/projects/`.
+
+- [ ] **Step 1: Make the published copies.** Pillow is available in the scratchpad libs (`PYTHONPATH=C:/Users/DeLL/AppData/Local/Temp/claude/4aba391c15a3e597/cb0fdf3d-6d28-4b06-a3f3-2b2c90d5b6ec/scratchpad/libs`; if the import fails, `pip install --target` that folder `pillow`). Put this script in that scratchpad folder (not in the repo) and run it from the repo root:
+
+```python
+from PIL import Image
+import os
+
+src, dst = 'Project_SS', 'site/public/images/projects'
+os.makedirs(dst, exist_ok=True)
+jobs = [
+    # (source file, output name, crop box (left, top, right, bottom); None = no crop)
+    ('Options_Simulator.png', 'options-simulator-result.png', None),
+    ('Qiskit_Advance_Final.png', 'qiskit-hardware-runs.png', None),
+    ('Gold_Prediction_LSTM_Result.png', 'gold-price-targets.png', None),
+    ('Gold_Prediction_Model_tuning_Charts.png', 'gold-residual-diagnostics.png', (0, 20, None, None)),
+    ('Lecture hall booking.png', 'lecture-hall-booking.png', (0, 225, None, None)),
+]
+for name, out, box in jobs:
+    im = Image.open(os.path.join(src, name)).convert('RGB')
+    if box:
+        l, t, r, b = box
+        im = im.crop((l, t, r or im.width, b or im.height))
+    im.save(os.path.join(dst, out), optimize=True)
+    print(out, im.width, im.height, os.path.getsize(os.path.join(dst, out)) // 1024, 'KB')
+```
+Write down the printed width and height of each file: they go into `figures.ts`.
+
+- [ ] **Step 2: Look at the two cropped files** (Read tool). `lecture-hall-booking.png` must show NO email address anywhere (the header with the title, email and Sign out button must be gone; the date controls, 3D building and bookings panel remain). `gold-residual-diagnostics.png` must not show the "Saved: figure4_residuals.png" text line at the top. If either check fails, adjust the crop top value (larger for the lecture hall, a few pixels for the gold chart), re-run, and note the final values in your report. Do not proceed until both are clean.
+
+- [ ] **Step 3: Write the failing test** `figures.test.ts`
+
+```ts
+import { describe, it, expect } from 'vitest';
+import { existsSync } from 'node:fs';
+import path from 'node:path';
+import { projectFigures } from './figures';
+import { projects } from './projects';
+import { getFigures } from './queries';
+
+describe('project figures', () => {
+  it('only belongs to existing projects and has complete entries', () => {
+    const slugs = projects.map((p) => p.slug);
+    for (const [slug, figs] of Object.entries(projectFigures)) {
+      expect(slugs).toContain(slug);
+      expect(figs.length).toBeGreaterThan(0);
+      for (const f of figs) {
+        expect(f.alt.length).toBeGreaterThan(10);
+        expect(f.caption.length).toBeGreaterThan(10);
+        expect(f.width).toBeGreaterThan(0);
+        expect(f.height).toBeGreaterThan(0);
+      }
+    }
+  });
+  it('points at image files that exist', () => {
+    for (const figs of Object.values(projectFigures)) {
+      for (const f of figs) {
+        expect(existsSync(path.join(__dirname, '..', '..', 'public', f.src))).toBe(true);
+      }
+    }
+  });
+  it('covers the screenshot projects and names nothing private', () => {
+    for (const slug of [
+      'options-strategy-simulator',
+      'qiskit-portfolio-optimization',
+      'gold-price-forecasting',
+      'lecture-hall-booking',
+    ]) {
+      expect(getFigures(slug).length).toBeGreaterThan(0);
+    }
+    expect(getFigures('gold-price-forecasting')).toHaveLength(2);
+    expect(getFigures('spotify-campaign')).toEqual([]);
+    expect(JSON.stringify(projectFigures)).not.toMatch(/imthyderabad|@/);
+  });
+});
+```
+
+- [ ] **Step 4: Run, expect failure**
+
+Run (from `site/`): `npx vitest run src/content/figures.test.ts`
+Expected: FAIL (module `./figures` not found).
+
+- [ ] **Step 5: Add the type** to `types.ts` (append):
+
+```ts
+export type ProjectFigure = { src: string; alt: string; caption: string; width: number; height: number };
+```
+
+- [ ] **Step 6: Create `figures.ts`.** Replace each `WIDTH_*` / `HEIGHT_*` placeholder below with the real numbers printed in step 1 (they are the pixel sizes of the published files).
+
+```ts
+import type { ProjectFigure } from './types';
+
+export const projectFigures: Record<string, ProjectFigure[]> = {
+  'options-strategy-simulator': [
+    {
+      src: '/images/projects/options-simulator-result.png',
+      alt: "Result screen of the options simulator: ten strategies ranked by profit and loss for one round, with the player's Long Call second.",
+      caption: 'Round 1 result: a Long Call on HDFCBANK in the May 2022 crash ranked second of ten strategies.',
+      width: WIDTH_OPTIONS,
+      height: HEIGHT_OPTIONS,
+    },
+  ],
+  'qiskit-portfolio-optimization': [
+    {
+      src: '/images/projects/qiskit-hardware-runs.png',
+      alt: 'Table of hardware runs on the ibm_fez chip compared with noiseless and pure-noise baselines for 8 and 12 stocks.',
+      caption:
+        "Runs on IBM's ibm_fez chip against noiseless and pure-noise baselines. At 12 stocks (p=1) the valid-portfolio rate was 15.2% with error suppression, against 5.3% for pure noise.",
+      width: WIDTH_QISKIT,
+      height: HEIGHT_QISKIT,
+    },
+  ],
+  'gold-price-forecasting': [
+    {
+      src: '/images/projects/gold-price-targets.png',
+      alt: 'Five-day price targets from the model, from a bearish 10th percentile to a bullish 90th percentile.',
+      caption: 'Five-day price targets from the probabilistic model, from the 10th to the 90th percentile.',
+      width: WIDTH_TARGETS,
+      height: HEIGHT_TARGETS,
+    },
+    {
+      src: '/images/projects/gold-residual-diagnostics.png',
+      alt: 'Four charts: residual distribution, residuals over time, a normal Q-Q plot and uncertainty width against actual error.',
+      caption:
+        'Residual diagnostics: error distribution, errors over time, a normal Q-Q plot, and predicted uncertainty width against actual error.',
+      width: WIDTH_RESIDUALS,
+      height: HEIGHT_RESIDUALS,
+    },
+  ],
+  'lecture-hall-booking': [
+    {
+      src: '/images/projects/lecture-hall-booking.png',
+      alt: 'Booking screen: date and time pickers above an interactive 3D model of the lecture halls, coloured by availability.',
+      caption: 'Pick a date and time window, then click an available room in the 3D building to book it.',
+      width: WIDTH_HALL,
+      height: HEIGHT_HALL,
+    },
+  ],
+};
+```
+
+- [ ] **Step 7: Add `getFigures` to `queries.ts`** (add `type ProjectFigure` to the types import, add `import { projectFigures } from './figures';` with the other imports, then append):
+
+```ts
+export function getFigures(slug: string): ProjectFigure[] {
+  return projectFigures[slug] ?? [];
+}
+```
+
+- [ ] **Step 8: Run, expect pass**
+
+Run: `npx vitest run src/content && npm run lint`
+Expected: all content tests pass, lint clean. Also run `git status --short site/public` and confirm only the five new files under `site/public/images/projects/` are untracked; the `Project_SS` originals must NOT be added.
+
+- [ ] **Step 9: Commit**
+
+```bash
+cd .. && git add site/public/images/projects site/src/content && git commit -m "feat: add project figures with cropped screenshots"
+```
+(append trailers)
+
+---
+
+### Task 4: Project pages, back bar and 404 (TDD)
 
 **Files:**
 - Create: `site/src/components/back-bar.tsx`, `site/src/components/project-article.tsx`, `site/src/app/work/[slug]/page.tsx`, `site/src/app/not-found.tsx`
 - Test: `site/src/components/project-article.test.tsx`, `site/src/app/work/[slug]/page.test.tsx`, `site/src/app/not-found.test.tsx`
 
 **Interfaces:**
-- Consumes: `getProject`, `getDetails`, `getProjectSlugs` (`@/content/queries`); `Project`, `ProjectDetails` (`@/content/types`); `HalftonePlate`, `NumbersBox`, `Footer`, `SmartLink`; `site` (`@/content/site`).
-- Produces: `BackBar()`; `ProjectArticle({ project, details? })` (one `h1`; sr-only `h2` "Key figures"; when `details` is present, `h2`s "The problem", "The approach", "The result", "Built with"; an external link when `project.link` exists); route `/work/[slug]` (default export `WorkPage`, plus `generateStaticParams`, `generateMetadata`); `NotFound()`.
+- Consumes: `getProject`, `getDetails`, `getFigures`, `getProjectSlugs` (`@/content/queries`); `Project`, `ProjectDetails`, `ProjectFigure` (`@/content/types`); `HalftonePlate`, `NumbersBox`, `Footer`, `SmartLink`; `site` (`@/content/site`).
+- Produces: `BackBar()`; `ProjectArticle({ project, details?, figures? })` (one `h1`; the halftone plate only when there are no figures; sr-only `h2` "Key figures"; when `figures` is non-empty an `h2` "Figures" with one captioned `next/image` per figure; when `details` is present, `h2`s "The problem", "The approach", "The result", "Built with"; an external link when `project.link` exists); route `/work/[slug]` (default export `WorkPage`, plus `generateStaticParams`, `generateMetadata`); `NotFound()`.
 
 - [ ] **Step 1: Write the failing tests**
 
 `project-article.test.tsx`:
 ```tsx
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { ProjectArticle } from './project-article';
-import { getDetails, getProject } from '@/content/queries';
+import { getDetails, getFigures, getProject } from '@/content/queries';
+
+vi.mock('next/image', () => ({
+  default: ({ src, alt }: { src: string; alt: string }) => (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src={src} alt={alt} />
+  ),
+}));
 
 describe('ProjectArticle', () => {
   it('shows the write-up sections and stack for a described project', () => {
@@ -296,6 +479,16 @@ describe('ProjectArticle', () => {
     expect(screen.getByText(project.credit)).toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'The problem' })).toBeNull();
   });
+  it('shows real figures with captions and drops the halftone art when it has them', () => {
+    const project = getProject('gold-price-forecasting')!;
+    const figures = getFigures('gold-price-forecasting');
+    render(<ProjectArticle project={project} figures={figures} />);
+    expect(screen.getByRole('heading', { level: 2, name: 'Figures' })).toBeInTheDocument();
+    for (const f of figures) {
+      expect(screen.getByRole('img', { name: f.alt })).toHaveAttribute('src', f.src);
+      expect(screen.getByText(f.caption)).toBeInTheDocument();
+    }
+  });
   it('opens an external project link safely in a new tab', () => {
     const project = getProject('lecture-hall-booking')!;
     render(<ProjectArticle project={project} details={getDetails('lecture-hall-booking')} />);
@@ -308,10 +501,17 @@ describe('ProjectArticle', () => {
 ```
 `src/app/work/[slug]/page.test.tsx`:
 ```tsx
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import WorkPage, { generateMetadata, generateStaticParams } from './page';
 import { projects } from '@/content/projects';
+
+vi.mock('next/image', () => ({
+  default: ({ src, alt }: { src: string; alt: string }) => (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src={src} alt={alt} />
+  ),
+}));
 
 describe('work page', () => {
   it('prerenders every project slug', () => {
@@ -375,7 +575,8 @@ export function BackBar() {
 - [ ] **Step 4: `project-article.tsx`**
 
 ```tsx
-import type { Project, ProjectDetails } from '@/content/types';
+import Image from 'next/image';
+import type { Project, ProjectDetails, ProjectFigure } from '@/content/types';
 import { HalftonePlate } from './halftone-plate';
 import { NumbersBox } from './numbers-box';
 
@@ -383,7 +584,15 @@ const sectionHeading =
   'mt-8 border-b-2 border-ink pb-1 font-label text-sm font-semibold uppercase tracking-[0.3em]';
 const paragraph = 'mt-3 font-body text-lg leading-relaxed';
 
-export function ProjectArticle({ project, details }: { project: Project; details?: ProjectDetails }) {
+export function ProjectArticle({
+  project,
+  details,
+  figures = [],
+}: {
+  project: Project;
+  details?: ProjectDetails;
+  figures?: ProjectFigure[];
+}) {
   return (
     <article className="mx-auto max-w-3xl px-4 py-8">
       <p className="font-label text-sm font-semibold uppercase tracking-[0.25em] text-accent">
@@ -391,7 +600,7 @@ export function ProjectArticle({ project, details }: { project: Project; details
       </p>
       <h1 className="mt-1 font-display text-4xl font-black leading-[1.05] sm:text-5xl">{project.title}</h1>
       <p className="mt-2 font-body text-lg italic">{project.credit}</p>
-      <HalftonePlate caption={`${project.title}, ${project.year}`} />
+      {figures.length === 0 && <HalftonePlate caption={`${project.title}, ${project.year}`} />}
       <p className="mt-4 font-body text-lg leading-relaxed">{project.deck}</p>
       <h2 className="sr-only">Key figures</h2>
       <NumbersBox metrics={project.metrics} />
@@ -411,6 +620,24 @@ export function ProjectArticle({ project, details }: { project: Project; details
               </li>
             ))}
           </ul>
+        </>
+      )}
+      {figures.length > 0 && (
+        <>
+          <h2 className={sectionHeading}>Figures</h2>
+          {figures.map((f) => (
+            <figure key={f.src} className="mt-4">
+              <Image
+                src={f.src}
+                alt={f.alt}
+                width={f.width}
+                height={f.height}
+                sizes="(min-width: 768px) 48rem, 100vw"
+                className="h-auto w-full border border-ink"
+              />
+              <figcaption className="mt-1 font-body text-sm italic">{f.caption}</figcaption>
+            </figure>
+          ))}
         </>
       )}
       {project.link && (
@@ -439,7 +666,7 @@ import { notFound } from 'next/navigation';
 import { BackBar } from '@/components/back-bar';
 import { Footer } from '@/components/footer';
 import { ProjectArticle } from '@/components/project-article';
-import { getDetails, getProject, getProjectSlugs } from '@/content/queries';
+import { getDetails, getFigures, getProject, getProjectSlugs } from '@/content/queries';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -462,7 +689,7 @@ export default async function WorkPage({ params }: Props) {
     <>
       <BackBar />
       <main id="main">
-        <ProjectArticle project={project} details={getDetails(slug)} />
+        <ProjectArticle project={project} details={getDetails(slug)} figures={getFigures(slug)} />
       </main>
       <Footer />
     </>
@@ -505,7 +732,7 @@ cd .. && git add site/src && git commit -m "feat: add project pages, back bar an
 
 ---
 
-### Task 4: Résumé data and page (TDD)
+### Task 5: Résumé data and page (TDD)
 
 **Files:**
 - Create: `site/src/content/resume-full.ts`, `site/src/components/resume-page.tsx`, `site/src/app/resume/page.tsx`
@@ -842,7 +1069,7 @@ cd .. && git add site/src && git commit -m "feat: add resume page and structured
 
 ---
 
-### Task 5: Link the résumé page from the classifieds, then verify everything
+### Task 6: Link the résumé page from the classifieds, then verify everything
 
 **Files:**
 - Modify: `site/src/components/classifieds.tsx`, `site/src/components/classifieds.test.tsx`
@@ -896,6 +1123,6 @@ cd .. && git add site/src && git commit -m "feat: link resume page from classifi
 
 ## Self-Review
 - **Spec coverage (3a):** article pages per project with problem/approach/result/stack (spec section 3 routes and section 7 case studies, limited to verified facts); `/resume` page with PDF download and no phone number (spec sections 3, 8); classifieds open `/resume` (spec section 6); styled 404; all front-page links (`Continued on A3`, story cards, case-file lists, ads) now resolve. Review carry-overs done: ad landmark names, "More stories" outline, decorative arrow, dated bio. Not here by design: folder opening, fan-out, focus-and-dim, back pill, grain stacking and the `motion` library (plan 3b); real project images; markets strip and wire (phase 4); the stipple portrait and editorial drop cap (polish).
-- **Placeholders:** none; every step has complete code and exact commands. Write-up copy is real, limited to facts verified from the repos, résumé and decks.
+- **Placeholders:** none except the `WIDTH_*`/`HEIGHT_*` pixel sizes in `figures.ts`, which Task 3 fills from the printed output of its image step; every other step has complete code and exact commands. Write-up copy is real, limited to facts verified from the repos, résumé and decks.
 - **Type consistency:** `ProjectDetails` is defined once (types.ts) and used by `details.ts`, `queries.ts` and `ProjectArticle`; `getProject/getDetails/getProjectSlugs` are used by the route and tests with matching signatures; `resumeFull` entries share the `{ org, role, dates, bullets }` shape that `Entries` expects (`satisfies ResumeEntry[]`); `BackBar` and `Footer` are reused on all three new routes.
-- **Known risks:** testing async server components with `render(await Page(...))` depends on the installed Vitest/React versions (Task 3 step 7 says what to do if it fails); under Cache Components, `notFound()` behaviour for unknown slugs is verified in the build/curl step; the `Options Strategy Simulator` result copy describes the designed game: the owner should confirm its current status before launch.
+- **Known risks:** testing async server components with `render(await Page(...))` depends on the installed Vitest/React versions (Task 3 step 7 says what to do if it fails); under Cache Components, `notFound()` behaviour for unknown slugs is verified in the build/curl step; the Qiskit hardware screenshot is a raw notebook table (cell values `NaN`): it is used with a precise caption for now and should be replaced with a clean chart later.
