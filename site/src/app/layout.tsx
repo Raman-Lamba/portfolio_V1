@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Playfair_Display, Source_Serif_4, Barlow_Condensed, IBM_Plex_Mono } from 'next/font/google';
+import { SkipLink } from '@/components/skip-link';
 import './globals.css';
 
 const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair', weight: ['700', '900'] });
@@ -15,7 +16,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${playfair.variable} ${source.variable} ${barlow.variable} ${plex.variable}`}>
-      <body>{children}</body>
+      <body>
+        <SkipLink />
+        {children}
+      </body>
     </html>
   );
 }

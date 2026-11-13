@@ -17,8 +17,10 @@ export function Ad({ ad, layout }: { ad: AdData; layout: 'tall' | 'wide' }) {
         href={ad.href}
         className="font-label text-sm font-semibold uppercase tracking-widest text-accent underline underline-offset-4"
       >
-        {coupon ? '✂ ' : ''}
-        {ad.cta} →
+        <span aria-hidden="true">{coupon ? '✂ ' : ''}</span>
+        {ad.cta}
+        <span className="sr-only">: {ad.headline}</span>
+        <span aria-hidden="true"> →</span>
       </SmartLink>
     </aside>
   );

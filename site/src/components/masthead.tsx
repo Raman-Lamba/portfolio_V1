@@ -4,9 +4,9 @@ import { Dateline } from './dateline';
 export function Masthead({ now }: { now?: Date }) {
   return (
     <header className="border-b-[6px] border-double border-ink px-4 py-3">
-      <div className="flex justify-between gap-4 font-label text-xs uppercase tracking-[0.18em]">
+      <div className="flex flex-col gap-2 font-label text-xs uppercase tracking-[0.18em] sm:flex-row sm:justify-between sm:gap-4">
         <p>{site.availability}</p>
-        <p className="text-right">
+        <p className="sm:text-right">
           <span className="block">{site.location}</span>
           <Dateline now={now} className="block min-h-[1em]" />
           <span className="block">{site.volume}</span>

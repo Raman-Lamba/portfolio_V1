@@ -16,7 +16,7 @@ describe('LeadStory', () => {
       expect(screen.getByText(m.value)).toBeInTheDocument();
       expect(screen.getByText(m.label)).toBeInTheDocument();
     }
-    expect(screen.getByRole('link', { name: /Continued on A3/ })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: `Continued on A3: ${lead.title}` })).toHaveAttribute(
       'href',
       `/work/${lead.slug}`,
     );

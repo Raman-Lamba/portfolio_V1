@@ -4,11 +4,10 @@ export function HalftonePlate({ caption }: { caption: string }) {
     <figure className="mt-4">
       <div
         aria-hidden="true"
-        className="h-48 w-full border border-ink sm:h-64"
+        className="h-48 w-full border border-ink bg-ink/15 text-ink sm:h-64"
         style={{
-          backgroundColor: '#d9cdb0',
           backgroundImage:
-            'radial-gradient(circle, #1b1612 22%, transparent 24%), radial-gradient(circle, #1b1612 10%, transparent 12%)',
+            'radial-gradient(circle, currentColor 22%, transparent 24%), radial-gradient(circle, currentColor 10%, transparent 12%)',
           backgroundSize: '9px 9px, 4px 4px',
         }}
       />
