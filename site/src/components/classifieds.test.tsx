@@ -11,5 +11,6 @@ describe('Classifieds', () => {
     expect(screen.getAllByRole('article')).toHaveLength(classifieds.length);
     expect(screen.getByText(/GPA 9\.14/)).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /Download the résumé/ })).toHaveAttribute('href', site.resumePdf);
+    expect(screen.getByRole('link', { name: /Read the full résumé/ })).toHaveAttribute('href', '/resume');
   });
 });

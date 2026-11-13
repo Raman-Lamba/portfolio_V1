@@ -1,5 +1,6 @@
 import { classifieds } from '@/content/resume';
 import { site } from '@/content/site';
+import { SmartLink } from './smart-link';
 
 export function Classifieds() {
   return (
@@ -22,13 +23,21 @@ export function Classifieds() {
           </article>
         ))}
       </div>
-      <a
-        href={site.resumePdf}
-        download
-        className="font-label text-sm font-semibold uppercase tracking-widest text-accent underline underline-offset-4"
-      >
-        Download the résumé (PDF)<span aria-hidden="true"> →</span>
-      </a>
+      <div className="flex flex-wrap gap-x-4 gap-y-1">
+        <SmartLink
+          href="/resume"
+          className="font-label text-sm font-semibold uppercase tracking-widest text-accent underline underline-offset-4"
+        >
+          Read the full résumé<span aria-hidden="true"> →</span>
+        </SmartLink>
+        <a
+          href={site.resumePdf}
+          download
+          className="font-label text-sm font-semibold uppercase tracking-widest text-accent underline underline-offset-4"
+        >
+          Download the résumé (PDF)<span aria-hidden="true"> →</span>
+        </a>
+      </div>
     </section>
   );
 }
