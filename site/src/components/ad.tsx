@@ -9,7 +9,7 @@ export function Ad({ ad, layout }: { ad: AdData; layout: 'tall' | 'wide' }) {
       ? 'flex flex-col items-center justify-center gap-3 py-10'
       : 'flex flex-col items-center justify-between gap-3 sm:flex-row';
   return (
-    <aside aria-label="Advertisement" className={`${frame} ${shape} border-ink p-4 text-center`}>
+    <aside aria-label={`Advertisement: ${ad.headline}`} className={`${frame} ${shape} border-ink p-4 text-center`}>
       <p className="font-label text-[0.7rem] uppercase tracking-[0.3em]">Advertisement</p>
       <p className="font-display text-2xl font-black uppercase leading-tight">{ad.headline}</p>
       <p className="font-body italic">{ad.body}</p>

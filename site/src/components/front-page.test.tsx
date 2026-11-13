@@ -20,7 +20,8 @@ describe('FrontPage', () => {
     for (const name of ['From our bureaus', 'From the archive', 'Classifieds', 'Editorial', 'Letters to the Editor']) {
       expect(screen.getByRole('heading', { level: 2, name })).toBeInTheDocument();
     }
-    expect(screen.getAllByRole('complementary', { name: 'Advertisement' })).toHaveLength(3);
+    expect(screen.getByRole('heading', { level: 2, name: 'More stories' })).toBeInTheDocument();
+    expect(screen.getAllByRole('complementary', { name: /^Advertisement: / })).toHaveLength(3);
 
     const nav = screen.getByRole('navigation', { name: 'Inside today' });
     for (const a of within(nav).getAllByRole('link')) {

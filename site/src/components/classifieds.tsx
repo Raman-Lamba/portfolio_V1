@@ -27,7 +27,7 @@ export function Classifieds() {
         download
         className="font-label text-sm font-semibold uppercase tracking-widest text-accent underline underline-offset-4"
       >
-        Download the résumé (PDF) →
+        Download the résumé (PDF)<span aria-hidden="true"> →</span>
       </a>
     </section>
   );

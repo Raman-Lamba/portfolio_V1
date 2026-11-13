@@ -21,11 +21,16 @@ export function FrontPage() {
           <LeadStory project={lead} />
           <Ad ad={getAd('wanted')} layout="tall" />
         </div>
-        <div className="mt-6 grid divide-y divide-ink border-y-2 border-ink md:grid-cols-3 md:divide-x md:divide-y-0">
-          {stories.map((s) => (
-            <StoryCard key={s.slug} project={s} />
-          ))}
-        </div>
+        <section aria-labelledby="stories-heading" className="mt-6">
+          <h2 id="stories-heading" className="sr-only">
+            More stories
+          </h2>
+          <div className="grid divide-y divide-ink border-y-2 border-ink md:grid-cols-3 md:divide-x md:divide-y-0">
+            {stories.map((s) => (
+              <StoryCard key={s.slug} project={s} />
+            ))}
+          </div>
+        </section>
         <div className="mt-6">
           <Ad ad={getAd('backtest')} layout="wide" />
         </div>
