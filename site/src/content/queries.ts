@@ -1,7 +1,8 @@
 import { projects } from './projects';
 import { ads } from './ads';
 import { projectDetails } from './details';
-import { sections, type Ad, type Project, type ProjectDetails } from './types';
+import { projectFigures } from './figures';
+import { sections, type Ad, type Project, type ProjectDetails, type ProjectFigure } from './types';
 
 const STORY_SLUGS = ['gold-price-forecasting', 'options-strategy-simulator', 'trade-simulator'];
 
@@ -41,4 +42,8 @@ export function getProject(slug: string): Project | undefined {
 
 export function getDetails(slug: string): ProjectDetails | undefined {
   return projectDetails[slug];
+}
+
+export function getFigures(slug: string): ProjectFigure[] {
+  return projectFigures[slug] ?? [];
 }
