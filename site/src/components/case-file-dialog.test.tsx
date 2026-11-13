@@ -39,7 +39,8 @@ describe('CaseFileDialog', () => {
     for (const c of web.clippings) {
       const link = within(dialog).getByRole('link', { name: c.title });
       expect(link).toHaveAttribute('href', `/work/${c.slug}`);
-      expect(within(dialog).getAllByText(c.credit).length).toBeGreaterThan(0);
+      const item = within(dialog).getByRole('link', { name: c.title }).closest('li')!;
+      expect(within(item).getByText(c.credit)).toBeInTheDocument();
     }
     expect(within(dialog).getAllByRole('heading', { level: 3 })).toHaveLength(web.clippings.length);
     const hall = web.clippings.find((c) => c.slug === 'lecture-hall-booking')!;
@@ -47,10 +48,11 @@ describe('CaseFileDialog', () => {
   });
 
   it('locks page scroll while open and restores it on unmount', () => {
+    document.body.style.overflow = 'scroll';
     const { unmount } = render(<CaseFileDialog label={web.label} clippings={web.clippings} onClose={() => {}} />);
     expect(document.body.style.overflow).toBe('hidden');
     unmount();
-    expect(document.body.style.overflow).toBe('');
+    expect(document.body.style.overflow).toBe('scroll');
   });
 
   it('fades out then calls onClose once from the close button', () => {
