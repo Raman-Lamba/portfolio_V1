@@ -17,6 +17,7 @@ export function CaseFileDialog({ label, clippings, onClose }: Props) {
 
   useEffect(() => {
     const dialog = ref.current;
+    const opener = document.activeElement as HTMLElement | null;
     dialog?.showModal();
     dialog?.focus();
     const previous = document.body.style.overflow;
@@ -24,6 +25,7 @@ export function CaseFileDialog({ label, clippings, onClose }: Props) {
     return () => {
       document.body.style.overflow = previous;
       dialog?.close();
+      if (opener?.isConnected) opener.focus({ preventScroll: true });
     };
   }, []);
 
@@ -47,7 +49,7 @@ export function CaseFileDialog({ label, clippings, onClose }: Props) {
       onClick={(e) => {
         if (e.target === e.currentTarget) requestClose();
       }}
-      className={`paper-grain fixed inset-0 m-0 h-dvh max-h-none w-dvw max-w-none overflow-y-auto border-0 bg-paper/90 p-0 outline-none backdrop-blur-sm text-ink transition-opacity duration-150 ${closing ? 'opacity-0' : 'opacity-100'}`}
+      className={`paper-grain fixed inset-0 m-0 h-dvh max-h-none w-dvw max-w-none overflow-y-auto border-0 bg-paper/90 p-0 outline-none backdrop:backdrop-blur-sm text-ink transition-opacity duration-150 ${closing ? 'opacity-0' : 'opacity-100'}`}
     >
       <div className="mx-auto max-w-6xl px-4 pb-24 pt-10">
         <h2

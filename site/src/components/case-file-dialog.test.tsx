@@ -99,4 +99,21 @@ describe('CaseFileDialog', () => {
     });
     expect(onClose).toHaveBeenCalledTimes(1);
   });
+
+  it('blurs the backdrop layer, not the dialog (keeps fixed children fixed)', () => {
+    render(<CaseFileDialog label={web.label} clippings={web.clippings} onClose={() => {}} />);
+    const dialog = screen.getByRole('dialog');
+    expect(dialog.className).toContain('backdrop:backdrop-blur-sm');
+    expect(dialog.className).not.toMatch(/(^|\s)backdrop-blur-sm/);
+  });
+
+  it('returns focus to the opener on unmount', () => {
+    const button = document.createElement('button');
+    document.body.appendChild(button);
+    button.focus();
+    const { unmount } = render(<CaseFileDialog label={web.label} clippings={web.clippings} onClose={() => {}} />);
+    unmount();
+    expect(button).toHaveFocus();
+    button.remove();
+  });
 });
