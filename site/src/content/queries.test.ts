@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { getLead, getStories, getAd } from './queries';
+import { getLead, getStories, getAd, getFolders } from './queries';
+import { projects } from './projects';
 
 describe('queries', () => {
   it('returns the lead project', () => {
@@ -17,5 +18,15 @@ describe('queries', () => {
   it('finds an ad by id and throws on an unknown id', () => {
     expect(getAd('wanted').href).toBe('#contact');
     expect(() => getAd('nope')).toThrow(/nope/);
+  });
+});
+
+describe('getFolders', () => {
+  it('groups projects into four case files, honouring cross-listing', () => {
+    const folders = getFolders();
+    expect(folders.map((f) => f.id)).toEqual(['finance', 'ml-ai', 'web', 'marketing']);
+    const gold = projects.find((p) => p.slug === 'gold-price-forecasting')!;
+    expect(folders.filter((f) => f.projects.includes(gold)).map((f) => f.id)).toEqual(['finance', 'ml-ai']);
+    for (const f of folders) expect(f.projects.length).toBeGreaterThan(0);
   });
 });

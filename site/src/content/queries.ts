@@ -1,6 +1,6 @@
 import { projects } from './projects';
 import { ads } from './ads';
-import type { Ad, Project } from './types';
+import { sections, type Ad, type Project } from './types';
 
 const STORY_SLUGS = ['gold-price-forecasting', 'options-strategy-simulator', 'trade-simulator'];
 
@@ -24,4 +24,8 @@ export function getAd(id: string): Ad {
   const a = ads.find((x) => x.id === id);
   if (!a) throw new Error(`Unknown ad id: ${id}`);
   return a;
+}
+
+export function getFolders() {
+  return sections.map((s) => ({ ...s, projects: projects.filter((p) => p.sections.includes(s.id)) }));
 }
