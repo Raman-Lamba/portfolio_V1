@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getLead, getStories, getAd, getFolders } from './queries';
+import { getLead, getStories, getAd, getFolders, getFolderClippings } from './queries';
 import { projects } from './projects';
 
 describe('queries', () => {
@@ -28,5 +28,30 @@ describe('getFolders', () => {
     const gold = projects.find((p) => p.slug === 'gold-price-forecasting')!;
     expect(folders.filter((f) => f.projects.includes(gold)).map((f) => f.id)).toEqual(['finance', 'ml-ai']);
     for (const f of folders) expect(f.projects.length).toBeGreaterThan(0);
+  });
+});
+
+describe('getFolderClippings', () => {
+  it('mirrors the folders and attaches the first figure when there is one', () => {
+    const folders = getFolderClippings();
+    expect(folders.map((f) => f.id)).toEqual(['finance', 'ml-ai', 'web', 'marketing']);
+    const finance = folders[0];
+    const qiskit = finance.clippings.find((c) => c.slug === 'qiskit-portfolio-optimization')!;
+    expect(qiskit.title).toBe('Quantum Portfolio Optimization');
+    expect(qiskit.figure?.src).toBe('/images/projects/qiskit-hardware-runs.png');
+    const marketing = folders[3];
+    expect(marketing.clippings.map((c) => c.slug)).toEqual(['spotify-campaign']);
+    expect(marketing.clippings[0].figure).toBeUndefined();
+    const web = folders[2].clippings.find((c) => c.slug === 'lecture-hall-booking')!;
+    expect(web.figure?.src).toBe('/images/projects/lecture-hall-booking.png');
+  });
+  it('gives every clipping a title, kicker and credit', () => {
+    for (const f of getFolderClippings()) {
+      for (const c of f.clippings) {
+        expect(c.title.length).toBeGreaterThan(0);
+        expect(c.kicker.length).toBeGreaterThan(0);
+        expect(c.credit.length).toBeGreaterThan(0);
+      }
+    }
   });
 });

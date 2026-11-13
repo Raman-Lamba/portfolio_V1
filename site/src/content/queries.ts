@@ -2,7 +2,7 @@ import { projects } from './projects';
 import { ads } from './ads';
 import { projectDetails } from './details';
 import { projectFigures } from './figures';
-import { sections, type Ad, type Project, type ProjectDetails, type ProjectFigure } from './types';
+import { sections, type Ad, type Project, type ProjectDetails, type ProjectFigure, type Section } from './types';
 
 const STORY_SLUGS = ['gold-price-forecasting', 'options-strategy-simulator', 'trade-simulator'];
 
@@ -46,4 +46,28 @@ export function getDetails(slug: string): ProjectDetails | undefined {
 
 export function getFigures(slug: string): ProjectFigure[] {
   return projectFigures[slug] ?? [];
+}
+
+export type Clipping = {
+  slug: string;
+  title: string;
+  kicker: string;
+  credit: string;
+  figure?: ProjectFigure;
+};
+
+export type FolderClippings = { id: Section; label: string; clippings: Clipping[] };
+
+export function getFolderClippings(): FolderClippings[] {
+  return getFolders().map((f) => ({
+    id: f.id,
+    label: f.label,
+    clippings: f.projects.map((p) => ({
+      slug: p.slug,
+      title: p.title,
+      kicker: p.kicker,
+      credit: p.credit,
+      figure: getFigures(p.slug)[0],
+    })),
+  }));
 }
