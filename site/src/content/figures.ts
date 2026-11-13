@@ -22,19 +22,19 @@ export const projectFigures: Record<string, ProjectFigure[]> = {
   ],
   'gold-price-forecasting': [
     {
-      src: '/images/projects/gold-price-targets.png',
-      alt: 'Five-day price targets from the model, from a bearish 10th percentile to a bullish 90th percentile.',
-      caption: 'Five-day price targets from the probabilistic model, from the 10th to the 90th percentile.',
-      width: 1225,
-      height: 230,
-    },
-    {
       src: '/images/projects/gold-residual-diagnostics.png',
       alt: 'Four charts: residual distribution, residuals over time, a normal Q-Q plot and uncertainty width against actual error.',
       caption:
         'Residual diagnostics: error distribution, errors over time, a normal Q-Q plot, and predicted uncertainty width against actual error.',
       width: 2220,
       height: 1475,
+    },
+    {
+      src: '/images/projects/gold-price-targets.png',
+      alt: 'Five-day price targets from the model, from a bearish 10th percentile to a bullish 90th percentile.',
+      caption: 'Five-day price targets from the probabilistic model, from the 10th to the 90th percentile.',
+      width: 1225,
+      height: 230,
     },
   ],
   'lecture-hall-booking': [

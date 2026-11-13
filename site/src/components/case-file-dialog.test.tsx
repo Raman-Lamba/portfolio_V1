@@ -47,6 +47,11 @@ describe('CaseFileDialog', () => {
     expect(within(dialog).getByRole('img', { name: hall.figure!.alt })).toHaveAttribute('src', hall.figure!.src);
   });
 
+  it('focuses the dialog itself on open', () => {
+    render(<CaseFileDialog label={web.label} clippings={web.clippings} onClose={() => {}} />);
+    expect(screen.getByRole('dialog')).toHaveFocus();
+  });
+
   it('locks page scroll while open and restores it on unmount', () => {
     document.body.style.overflow = 'scroll';
     const { unmount } = render(<CaseFileDialog label={web.label} clippings={web.clippings} onClose={() => {}} />);

@@ -18,6 +18,7 @@ export function CaseFileDialog({ label, clippings, onClose }: Props) {
   useEffect(() => {
     const dialog = ref.current;
     dialog?.showModal();
+    dialog?.focus();
     const previous = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     return () => {
@@ -38,6 +39,7 @@ export function CaseFileDialog({ label, clippings, onClose }: Props) {
     <dialog
       ref={ref}
       aria-labelledby={titleId}
+      tabIndex={-1}
       onCancel={(e) => {
         e.preventDefault();
         requestClose();
@@ -45,7 +47,7 @@ export function CaseFileDialog({ label, clippings, onClose }: Props) {
       onClick={(e) => {
         if (e.target === e.currentTarget) requestClose();
       }}
-      className={`paper-grain fixed inset-0 m-0 h-dvh max-h-none w-dvw max-w-none overflow-y-auto border-0 bg-paper/95 p-0 text-ink transition-opacity duration-150 ${closing ? 'opacity-0' : 'opacity-100'}`}
+      className={`paper-grain fixed inset-0 m-0 h-dvh max-h-none w-dvw max-w-none overflow-y-auto border-0 bg-paper/90 p-0 outline-none backdrop-blur-sm text-ink transition-opacity duration-150 ${closing ? 'opacity-0' : 'opacity-100'}`}
     >
       <div className="mx-auto max-w-6xl px-4 pb-24 pt-10">
         <h2
@@ -62,7 +64,7 @@ export function CaseFileDialog({ label, clippings, onClose }: Props) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.26, ease: [0.23, 1, 0.32, 1], delay: i * 0.045 }}
               style={{ '--r': `${fan[i].rotate}deg`, '--lift': `${fan[i].lift}px` } as React.CSSProperties}
-              className="relative border-2 border-ink bg-paper p-3 md:mt-(--lift) md:rotate-(--r)"
+              className="relative self-start border-2 border-ink bg-paper p-3 md:mt-(--lift) md:rotate-(--r)"
             >
               <span aria-hidden="true" className="absolute -top-2 left-1/2 h-4 w-16 -translate-x-1/2 bg-ink/15" />
               {c.figure && (

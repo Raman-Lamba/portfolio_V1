@@ -39,4 +39,8 @@ describe('project figures', () => {
     expect(getFigures('spotify-campaign')).toEqual([]);
     expect(JSON.stringify(projectFigures)).not.toMatch(/imthyderabad|@/);
   });
+
+  it('leads the gold project with the diagnostics chart (a better thumbnail)', () => {
+    expect(getFigures('gold-price-forecasting')[0].src).toBe('/images/projects/gold-residual-diagnostics.png');
+  });
 });
