@@ -38,7 +38,7 @@ describe('getFolderClippings', () => {
     const finance = folders[0];
     const qiskit = finance.clippings.find((c) => c.slug === 'qiskit-portfolio-optimization')!;
     expect(qiskit.title).toBe('Quantum Portfolio Optimization');
-    expect(qiskit.figure?.src).toBe('/images/projects/qiskit-hardware-runs.png');
+    expect(qiskit.figure?.src).toBe('/images/projects/qiskit-hardware-valid-rate.png');
     const marketing = folders[3];
     expect(marketing.clippings.map((c) => c.slug)).toEqual(['spotify-campaign']);
     expect(marketing.clippings[0].figure).toBeUndefined();

@@ -12,12 +12,12 @@ export const projectFigures: Record<string, ProjectFigure[]> = {
   ],
   'qiskit-portfolio-optimization': [
     {
-      src: '/images/projects/qiskit-hardware-runs.png',
-      alt: 'Table of hardware runs on the ibm_fez chip compared with noiseless and pure-noise baselines for 8 and 12 stocks.',
+      src: '/images/projects/qiskit-hardware-valid-rate.png',
+      alt: 'Bar chart of the valid-portfolio rate on the ibm_fez chip for 8 and 12 stocks: pure noise against hardware runs with and without error suppression. At 12 stocks, p=1: 5.3% noise, 14.3% without, 15.2% with XY4 decoupling.',
       caption:
-        "Runs on IBM's ibm_fez chip against noiseless and pure-noise baselines. At 12 stocks (p=1) the valid-portfolio rate was 15.2% with error suppression, against 5.3% for pure noise.",
-      width: 2820,
-      height: 1622,
+        "Share of hardware shots that were a valid portfolio, on IBM's ibm_fez chip. At 12 stocks (p=1) the rate was 15.2% with XY4 error suppression, about three times the 5.3% expected from pure noise; a noiseless simulator is 100% by construction.",
+      width: 1200,
+      height: 640,
     },
   ],
   'gold-price-forecasting': [

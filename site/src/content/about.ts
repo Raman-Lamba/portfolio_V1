@@ -6,4 +6,23 @@ export const about = {
     'I am open to freelance projects and full-time roles in fintech.',
   ],
   pullQuote: 'Finance and code, in one pair of hands.',
+  // The boxed brief: three desks, each line drawn from the résumé and project content.
+  brief: {
+    heading: 'The brief',
+    items: [
+      {
+        lead: 'Finance desk.',
+        text: 'DCF, DDM and relative valuation; private credit deal analysis and covenant monitoring at Oxane Partners.',
+      },
+      {
+        lead: 'Code desk.',
+        text: 'Python, SQL, TypeScript/Next.js and C++; PyTorch, scikit-learn and Qiskit. Simulators, forecasters and a C++ order client, built solo.',
+      },
+      {
+        lead: 'On the record.',
+        // The case competition is named once on the page, in the Notices classified.
+        text: 'Winner, Qiskit Fall Fest 2026 (solo entry). First place in a finance case competition (Team Cygnus); see Notices.',
+      },
+    ],
+  },
 };

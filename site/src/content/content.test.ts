@@ -51,6 +51,7 @@ describe('content', () => {
   });
   it('points to assets that exist', () => {
     expect(existsSync(path.join(__dirname, '..', '..', 'public', site.photo))).toBe(true);
+    expect(existsSync(path.join(__dirname, '..', '..', 'public', site.portrait.src))).toBe(true);
     expect(existsSync(path.join(__dirname, '..', '..', 'public', site.resumePdf))).toBe(true);
   });
 });
