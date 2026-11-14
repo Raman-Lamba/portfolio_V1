@@ -27,7 +27,6 @@ export function FrontPage() {
         <div className="mt-6 grid gap-6 lg:grid-cols-[2fr_1fr]">
           <LeadStory project={lead} />
           <div className="space-y-4">
-            <Ad ad={getAd('wanted')} layout="tall" />
             <Suspense fallback={null}>
               <LiveWire />
             </Suspense>
@@ -56,10 +55,13 @@ export function FrontPage() {
           </div>
         </div>
         <div className="mt-6">
-          <Ad ad={getAd('backtest')} layout="wide" />
+          <Ad ad={getAd('wanted')} layout="wide" />
         </div>
         <CaseFiles />
         <Bureaus />
+        <div className="mt-8">
+          <Ad ad={getAd('backtest')} layout="wide" />
+        </div>
         <div className="mt-8 grid gap-8 lg:grid-cols-2 lg:divide-x lg:divide-ink">
           <div className="lg:pr-6">
             <Classifieds />

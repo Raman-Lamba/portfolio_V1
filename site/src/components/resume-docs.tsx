@@ -32,7 +32,7 @@ function Sheet({
       <span className="absolute -top-3 left-3 bg-ink px-2 py-0.5 font-label text-[0.65rem] uppercase tracking-widest text-paper">
         {tag}
       </span>
-      <span aria-hidden="true" className="block overflow-hidden pt-2 font-body text-[6px] leading-[1.4]">
+      <span aria-hidden="true" className="block overflow-hidden pt-2 font-body text-[7px] leading-[1.4]">
         {children}
       </span>
       <span
@@ -47,13 +47,13 @@ function Sheet({
 
 type Entry = { org: string; role: string; bullets: string[] };
 
-function entry(e: Entry) {
+function entry(e: Entry, n = 2) {
   return (
     <span key={e.org} className="mt-1.5 block">
-      <strong className="block text-[7px]">
+      <strong className="block text-[8px]">
         {e.org} <span className="font-normal italic">{e.role}</span>
       </strong>
-      {e.bullets.slice(0, 2).map((b) => (
+      {e.bullets.slice(0, n).map((b) => (
         <span key={b} className="block">
           • {b}
         </span>
@@ -63,7 +63,8 @@ function entry(e: Entry) {
 }
 
 export function ResumeDocs() {
-  const [first, second, third] = resumeFull.experience;
+  const jobs = resumeFull.experience;
+  const projects = resumeFull.projects;
   return (
     <section aria-labelledby="docs-heading">
       <h2
@@ -72,13 +73,14 @@ export function ResumeDocs() {
       >
         The résumé, on file
       </h2>
-      <div className="relative mt-6 h-[22rem] sm:h-[26rem]">
+      <div className="relative mt-6 h-[24rem] sm:h-[28rem]">
         <Sheet href="/resume" tag="Résumé" cta="Read online →" tilt="-3deg" className="left-0 top-0">
-          <strong className="block text-[9px]">{site.name}</strong>
+          <strong className="block text-[10px]">{site.name}</strong>
           <span className="block italic">{resumeFull.summary}</span>
-          <strong className="mt-1.5 block uppercase tracking-widest">Experience</strong>
-          {entry(first)}
-          {entry(second)}
+          <strong className="mt-2 block uppercase tracking-widest">Experience</strong>
+          {entry(jobs[0], 3)}
+          {entry(jobs[1])}
+          {entry(jobs[2])}
         </Sheet>
         <Sheet href={site.resumePdf} download tag="PDF" cta="Download ↓" tilt="2.5deg" className="right-0 top-8">
           <strong className="block uppercase tracking-widest">Education</strong>
@@ -87,9 +89,14 @@ export function ResumeDocs() {
               {e.school}, {e.detail}
             </span>
           ))}
-          <strong className="mt-1.5 block uppercase tracking-widest">Experience</strong>
-          {entry(third)}
-          {entry(second)}
+          <strong className="mt-2 block uppercase tracking-widest">Projects</strong>
+          {projects.slice(0, 4).map((j) => entry(j, 1))}
+          <strong className="mt-2 block uppercase tracking-widest">Skills</strong>
+          {resumeFull.skills.map((k) => (
+            <span key={k.label} className="block">
+              <strong>{k.label}.</strong> {k.items}
+            </span>
+          ))}
         </Sheet>
       </div>
     </section>
