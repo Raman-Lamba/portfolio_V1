@@ -29,6 +29,6 @@ describe('résumé, about and nav content', () => {
   it('has unique nav ids', () => {
     const ids = navItems.map((n) => n.id);
     expect(new Set(ids).size).toBe(ids.length);
-    expect(ids).toEqual(['bureaus', 'files', 'classifieds', 'editorial', 'contact']);
+    expect(ids).toEqual(['intro', 'files', 'bureaus', 'classifieds', 'contact']);
   });
 });

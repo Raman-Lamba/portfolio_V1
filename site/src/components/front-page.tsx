@@ -3,9 +3,9 @@ import { Ad } from './ad';
 import { Bureaus } from './bureaus';
 import { CaseFiles } from './case-files';
 import { Classifieds } from './classifieds';
-import { Editorial } from './editorial';
 import { Footer } from './footer';
 import { IndexBox } from './index-box';
+import { Intro } from './intro';
 import { LeadStory } from './lead-story';
 import { Letters } from './letters';
 import { StoryCard } from './story-card';
@@ -17,6 +17,7 @@ export function FrontPage() {
     <>
       <main id="main" className="mx-auto max-w-6xl px-4 py-6">
         <IndexBox />
+        <Intro />
         <div className="mt-6 grid gap-6 lg:grid-cols-[2fr_1fr]">
           <LeadStory project={lead} />
           <Ad ad={getAd('wanted')} layout="tall" />
@@ -30,15 +31,22 @@ export function FrontPage() {
               <StoryCard key={s.slug} project={s} />
             ))}
           </div>
+          <p className="mt-2 text-right">
+            <a
+              href="#files"
+              className="font-label text-sm font-semibold uppercase tracking-widest text-accent underline underline-offset-4"
+            >
+              See all work in the archive<span aria-hidden="true"> →</span>
+            </a>
+          </p>
         </section>
         <div className="mt-6">
           <Ad ad={getAd('backtest')} layout="wide" />
         </div>
-        <Bureaus />
         <CaseFiles />
-        <div className="mt-8 grid gap-8 lg:grid-cols-3 lg:divide-x lg:divide-ink [&>section]:lg:px-4 [&>section:first-child]:lg:pl-0 [&>section:last-child]:lg:pr-0">
+        <Bureaus />
+        <div className="mt-8 grid gap-8 lg:grid-cols-2 lg:divide-x lg:divide-ink [&>section]:lg:px-4 [&>section:first-child]:lg:pl-0 [&>section:last-child]:lg:pr-0">
           <Classifieds />
-          <Editorial />
           <Letters />
         </div>
         <div className="mt-8">

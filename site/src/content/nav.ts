@@ -1,8 +1,8 @@
-// Section ids shared by the index box and the sections themselves. Page labels are decorative.
+// Section ids shared by the index box and the sections themselves, in page order. Page labels are decorative (A3 is reserved for "Continued on A3").
 export const navItems = [
-  { id: 'bureaus', label: 'Bureaus', page: 'A4' },
-  { id: 'files', label: 'Case files', page: 'A5' },
+  { id: 'intro', label: 'About', page: 'A2' },
+  { id: 'files', label: 'Case files', page: 'A4' },
+  { id: 'bureaus', label: 'Bureaus', page: 'A5' },
   { id: 'classifieds', label: 'Classifieds', page: 'B1' },
-  { id: 'editorial', label: 'Editorial', page: 'B2' },
-  { id: 'contact', label: 'Letters', page: 'B3' },
+  { id: 'contact', label: 'Letters', page: 'B2' },
 ] as const;
