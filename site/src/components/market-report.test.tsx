@@ -22,11 +22,13 @@ describe('MarketReportView', () => {
     );
     expect(screen.getByRole('heading', { level: 2, name: 'Markets today' })).toBeInTheDocument();
     const india = screen.getByRole('table', { name: /India market indices/ });
-    expect(within(india).getByText('Nifty 50')).toBeInTheDocument();
-    expect(within(india).getByText('down')).toBeInTheDocument();
+    expect(screen.getAllByText('Nifty 50').length).toBeGreaterThan(0);
+    expect(within(india).getByText('Sensex')).toBeInTheDocument();
     expect(within(india).getByText('up')).toBeInTheDocument();
-    expect(screen.getByText('Open')).toBeInTheDocument();
-    expect(screen.getByText('Closed')).toBeInTheDocument();
+    expect(screen.getAllByText('down').length).toBeGreaterThan(0);
+    expect(screen.getByText('Market open')).toBeInTheDocument();
+    expect(screen.getByText('Market closed')).toBeInTheDocument();
+    expect(screen.getByText(/IST/)).toBeInTheDocument();
     expect(screen.getByText(/Indian equities ended lower: Nifty 50 -0\.61%/)).toBeInTheDocument();
     expect(screen.getByText(/Delayed, not advice/)).toBeInTheDocument();
   });

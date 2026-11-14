@@ -8,30 +8,66 @@ const zones: Record<Region, { tz: string; locale: string }> = {
 
 function asOf(region: Region, time?: number) {
   if (!time) return '';
-  return new Intl.DateTimeFormat('en-GB', {
+  const when = new Intl.DateTimeFormat('en-GB', {
     timeZone: zones[region].tz,
     weekday: 'short',
     day: 'numeric',
     month: 'short',
     hour: 'numeric',
     minute: '2-digit',
-    timeZoneName: 'short',
+    hour12: true,
   }).format(time);
+  return `${when} ${region === 'India' ? 'IST' : 'ET'}`;
+}
+
+function Change({ pct, big }: { pct: number; big?: boolean }) {
+  const down = pct < 0;
+  const text = `${Math.abs(pct).toFixed(2)}%`;
+  const arrow = down ? '▼' : '▲';
+  const word = <span className="sr-only">{down ? 'down' : 'up'}</span>;
+  if (big) {
+    return (
+      <span className={`inline-flex items-center gap-1 px-2 py-0.5 font-mono text-lg ${down ? 'bg-accent text-paper' : 'bg-ink text-paper'}`}>
+        <span aria-hidden="true">{arrow}</span>
+        {word}
+        {text}
+      </span>
+    );
+  }
+  return (
+    <span className={down ? 'text-accent' : undefined}>
+      <span aria-hidden="true">{arrow}</span> {word}
+      {text}
+    </span>
+  );
 }
 
 function Table({ region, rows }: { region: Region; rows: Quote[] }) {
   if (rows.length === 0) return null;
-  const open = rows[0].open === true;
+  const [lead, ...rest] = rows;
+  const open = lead.open === true;
+  const fmt = (n: number) => n.toLocaleString(zones[region].locale, { maximumFractionDigits: 2 });
   return (
-    <div className="min-w-0">
-      <div className="flex flex-wrap items-baseline justify-between gap-x-3">
-        <h3 className="font-display text-2xl font-bold">{region}</h3>
-        <p className="font-label text-xs uppercase tracking-widest">
-          <span className={open ? 'text-accent' : undefined}>{open ? 'Open' : 'Closed'}</span>
-          <span className="font-mono normal-case tracking-normal"> · as of {asOf(region, rows[0].time)}</span>
+    <div className="min-w-0 border-2 border-ink p-4">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <h3 className="font-display text-3xl font-bold leading-none">{region}</h3>
+          <p className="mt-1 font-mono text-xs">As of {asOf(region, lead.time)}</p>
+        </div>
+        <p
+          className={`border-2 px-2 py-0.5 font-label text-xs font-semibold uppercase tracking-[0.25em] ${open ? 'border-accent text-accent' : 'border-ink'}`}
+        >
+          {open ? 'Market open' : 'Market closed'}
         </p>
       </div>
-      <table className="mt-2 w-full border-t border-ink font-mono text-sm">
+      <div className="mt-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-1 border-y-2 border-ink py-3">
+        <div>
+          <p className="font-label text-xs font-semibold uppercase tracking-[0.25em]">{lead.label}</p>
+          <p className="font-display text-5xl font-bold leading-none tabular-nums">{fmt(lead.price)}</p>
+        </div>
+        <Change pct={lead.changePct} big />
+      </div>
+      <table className="w-full font-mono text-sm">
         <caption className="sr-only">{region} market indices, level and daily change</caption>
         <thead className="sr-only">
           <tr>
@@ -41,23 +77,20 @@ function Table({ region, rows }: { region: Region; rows: Quote[] }) {
           </tr>
         </thead>
         <tbody className="divide-y divide-ink/30">
-          {rows.map((q) => (
+          {rest.map((q) => (
             <tr key={q.label}>
-              <th scope="row" className="py-1 text-left font-label text-sm font-semibold uppercase tracking-widest">
+              <th scope="row" className="py-1.5 text-left font-label text-sm font-semibold uppercase tracking-widest">
                 {q.label}
               </th>
-              <td className="py-1 text-right">
-                {q.price.toLocaleString(zones[region].locale, { maximumFractionDigits: 2 })}
-              </td>
-              <td className={`py-1 pl-3 text-right ${q.changePct < 0 ? 'text-accent' : ''}`}>
-                <span aria-hidden="true">{q.changePct < 0 ? '▼' : '▲'}</span>
-                <span className="sr-only">{q.changePct < 0 ? 'down' : 'up'}</span> {Math.abs(q.changePct).toFixed(2)}%
+              <td className="py-1.5 text-right tabular-nums">{fmt(q.price)}</td>
+              <td className="w-24 py-1.5 text-right tabular-nums">
+                <Change pct={q.changePct} />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <p className="mt-2 font-body italic">{summarise(region, rows)}</p>
+      <p className="mt-3 border-t border-ink pt-2 font-body italic">{summarise(region, rows)}</p>
     </div>
   );
 }
@@ -72,7 +105,7 @@ export function MarketReportView({ report }: { report: Report }) {
       >
         Markets today
       </h2>
-      <div className="mt-4 grid gap-8 md:grid-cols-2 md:divide-x md:divide-ink [&>div:last-child]:md:pl-8">
+      <div className="mt-4 grid gap-6 md:grid-cols-2">
         <Table region="India" rows={report.India} />
         <Table region="US" rows={report.US} />
       </div>

@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import type { Ad as AdData } from '@/content/types';
 import { SmartLink } from './smart-link';
 
@@ -10,6 +11,16 @@ export function Ad({ ad, layout }: { ad: AdData; layout: 'tall' | 'wide' }) {
       : 'flex flex-col items-center justify-between gap-3 sm:flex-row';
   return (
     <aside aria-label={`Advertisement: ${ad.headline}`} className={`${frame} ${shape} border-ink p-4 text-center`}>
+      {layout === 'wide' && (
+        <Image
+          src={`/images/ads/${ad.id}.png`}
+          alt=""
+          width={1200}
+          height={480}
+          sizes="10rem"
+          className="h-24 w-40 shrink-0 border border-ink object-cover"
+        />
+      )}
       <p className="font-label text-[0.7rem] uppercase tracking-[0.3em]">Advertisement</p>
       <p className="font-display text-2xl font-black uppercase leading-tight">{ad.headline}</p>
       <p className="font-body italic">{ad.body}</p>
