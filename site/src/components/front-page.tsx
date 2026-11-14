@@ -10,6 +10,7 @@ import { IndexBox } from './index-box';
 import { Intro } from './intro';
 import { LeadStory } from './lead-story';
 import { Letters } from './letters';
+import { ResumeDocs } from './resume-docs';
 import { StoryCard } from './story-card';
 
 export function FrontPage() {
@@ -30,34 +31,43 @@ export function FrontPage() {
             <Suspense fallback={null}>
               <LiveWire />
             </Suspense>
+            <section aria-labelledby="stories-heading">
+              <h2
+                id="stories-heading"
+                className="border-b-2 border-ink pb-1 font-label text-sm font-semibold uppercase tracking-[0.3em]"
+              >
+                <span className="sr-only">More stories</span>
+                <span aria-hidden="true">Also in this edition</span>
+              </h2>
+              <div className="divide-y divide-ink">
+                {stories.map((s) => (
+                  <StoryCard key={s.slug} project={s} />
+                ))}
+              </div>
+              <p className="border-t-2 border-ink pt-2 text-right">
+                <a
+                  href="#files"
+                  className="font-label text-sm font-semibold uppercase tracking-widest text-accent underline underline-offset-4"
+                >
+                  See all work in the archive<span aria-hidden="true"> →</span>
+                </a>
+              </p>
+            </section>
           </div>
         </div>
-        <section aria-labelledby="stories-heading" className="mt-6">
-          <h2 id="stories-heading" className="sr-only">
-            More stories
-          </h2>
-          <div className="grid divide-y divide-ink border-y-2 border-ink md:grid-cols-3 md:divide-x md:divide-y-0">
-            {stories.map((s) => (
-              <StoryCard key={s.slug} project={s} />
-            ))}
-          </div>
-          <p className="mt-2 text-right">
-            <a
-              href="#files"
-              className="font-label text-sm font-semibold uppercase tracking-widest text-accent underline underline-offset-4"
-            >
-              See all work in the archive<span aria-hidden="true"> →</span>
-            </a>
-          </p>
-        </section>
         <div className="mt-6">
           <Ad ad={getAd('backtest')} layout="wide" />
         </div>
         <CaseFiles />
         <Bureaus />
-        <div className="mt-8 grid gap-8 lg:grid-cols-2 lg:divide-x lg:divide-ink [&>section]:lg:px-4 [&>section:first-child]:lg:pl-0 [&>section:last-child]:lg:pr-0">
-          <Classifieds />
-          <Letters />
+        <div className="mt-8 grid gap-8 lg:grid-cols-2 lg:divide-x lg:divide-ink">
+          <div className="lg:pr-6">
+            <Classifieds />
+          </div>
+          <div className="space-y-8 lg:pl-6">
+            <Letters />
+            <ResumeDocs />
+          </div>
         </div>
         <div className="mt-8">
           <Ad ad={getAd('quantum')} layout="wide" />

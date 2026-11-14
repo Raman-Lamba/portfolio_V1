@@ -18,10 +18,14 @@ describe('CaseFiles', () => {
     for (const s of sections) {
       expect(screen.getByRole('heading', { level: 3, name: `Case file: ${s.label}` })).toBeInTheDocument();
     }
-    const expected = projects.reduce((n, p) => n + p.sections.length, 0);
+    // each folder shows its first four titles as links; the rest are inside the folder
+    const expected = sections.reduce(
+      (n, s) => n + Math.min(4, projects.filter((p) => p.sections.includes(s.id)).length),
+      0,
+    );
     const links = screen.getAllByRole('link');
     expect(links).toHaveLength(expected);
-    expect(links.map((l) => l.getAttribute('href'))).toContain('/work/lecture-hall-booking');
+    expect(links.every((l) => l.getAttribute('href')?.startsWith('/work/'))).toBe(true);
   });
 });
 
@@ -70,12 +74,12 @@ describe('CaseFiles interaction', () => {
     expect(screen.getByRole('dialog', { name: 'Case file: Web' })).toBeInTheDocument();
   });
 
-  it('pins every open button to the bottom of its card so they line up', () => {
+  it('makes the whole folder the button', () => {
     render(<CaseFiles />);
     for (const s of sections) {
       const button = screen.getByRole('button', { name: `Open case file: ${s.label}` });
-      expect(button.className).toContain('mt-auto');
-      expect(button.closest('article')!.className).toContain('flex-col');
+      expect(button.className).toContain('inset-0');
+      expect(button.closest('article')).not.toBeNull();
     }
   });
 });

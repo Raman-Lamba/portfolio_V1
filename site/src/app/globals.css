@@ -4,6 +4,9 @@
   --color-paper: #efe6d0;
   --color-ink: #1b1612;
   --color-accent: #8b1e1e;
+  --color-manila: #dcc48e;
+  --color-manila-dark: #cdb277;
+  --color-sheet: #f7f0de;
   --font-display: var(--font-standard), Georgia, serif;
   --font-masthead: var(--font-fraktur), Georgia, serif;
   --font-body: var(--font-news), Georgia, serif;

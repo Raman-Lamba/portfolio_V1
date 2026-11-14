@@ -9,15 +9,20 @@ const cta =
 export function Intro() {
   return (
     <section id="intro" aria-labelledby="intro-heading" className="mt-6 border-b-2 border-ink pb-6">
-      <div className="grid gap-6 md:grid-cols-[10rem_1fr] md:grid-rows-[auto_1fr] md:gap-x-6 md:gap-y-4">
-        <Image
-          src={site.photo}
-          alt={`Portrait of ${site.name}`}
-          width={590}
-          height={845}
-          className="h-auto w-32 border border-ink grayscale contrast-125 md:w-40"
-        />
-        <div className="@container md:col-start-2 md:row-span-2 md:row-start-1">
+      <div className="grid gap-6 md:grid-cols-[12rem_1fr] md:gap-x-8">
+        <figure>
+          <Image
+            src={site.photo}
+            alt={`Portrait of ${site.name}`}
+            width={590}
+            height={845}
+            className="h-auto w-36 border border-ink grayscale contrast-125 md:w-full"
+          />
+          <figcaption className="mt-1 border-b border-ink pb-1 font-body text-xs italic">
+            {site.name}, MBA (Finance) candidate at IMT Hyderabad.
+          </figcaption>
+        </figure>
+        <div className="@container">
           <h2
             id="intro-heading"
             className="whitespace-nowrap font-display text-[clamp(1.1rem,5.4cqw,4rem)] font-bold leading-[1.05]"
@@ -31,17 +36,19 @@ export function Intro() {
               </p>
             ))}
           </div>
-          <blockquote className="mt-5 border-l-4 border-accent pl-3 font-display text-2xl italic">
-            {about.pullQuote}
-          </blockquote>
-        </div>
-        <div className="flex flex-wrap gap-3 md:col-start-1 md:row-start-2 md:flex-col md:items-stretch md:self-start">
-          <SmartLink href="#contact" className={`${cta} bg-ink text-paper text-center`}>
-            Hire me
-          </SmartLink>
-          <SmartLink href="/resume" className={`${cta} text-center`}>
-            Résumé
-          </SmartLink>
+          <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
+            <blockquote className="border-l-4 border-accent pl-3 font-display text-2xl italic">
+              {about.pullQuote}
+            </blockquote>
+            <div className="flex gap-3">
+              <SmartLink href="#contact" className={`${cta} bg-ink text-paper`}>
+                Hire me
+              </SmartLink>
+              <SmartLink href="/resume" className={cta}>
+                Résumé
+              </SmartLink>
+            </div>
+          </div>
         </div>
       </div>
     </section>
