@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parseHeadline, parseQuote } from './feeds';
+import { newest, parseItems, parseQuote } from './feeds';
 
 const chart = (meta: object) => ({ chart: { result: [{ meta }] } });
 
@@ -15,23 +15,32 @@ describe('parseQuote', () => {
   });
 });
 
-describe('parseHeadline', () => {
-  const xml = `<rss><channel><title>t</title><item><title>Fintech firm raises &amp; grows - Mint</title>
-    <link>https://news.google.com/rss/articles/abc</link><source url="https://mint.com">Mint</source></item></channel></rss>`;
-  it('takes the first item, strips the source suffix and decodes entities', () => {
-    expect(parseHeadline(xml)).toEqual({
-      title: 'Fintech firm raises & grows',
+describe('parseItems and newest', () => {
+  const xml = `<rss><channel>
+    <item><title><![CDATA[Old story]]></title><description><![CDATA[Old summary]]></description><link>https://a.test/1</link><pubDate>Mon, 09 Nov 2026 01:00:00 +0530</pubDate></item>
+    <item><title><![CDATA[Nifty &amp; Sensex rise]]></title><description><![CDATA[<p>Benchmarks <b>gained</b> on FII buying.</p>]]></description><link><![CDATA[https://a.test/2]]></link><pubDate><![CDATA[Sat, 14 Nov 2026 05:00:00 +0530]]></pubDate></item>
+    <item><title>Bad link</title><link>javascript:x</link></item></channel></rss>`;
+  const now = Date.parse('Sat, 14 Nov 2026 12:00:00 +0530');
+
+  it('reads CDATA, strips markup and skips non-http links', () => {
+    const items = parseItems(xml, 'Mint');
+    expect(items).toHaveLength(2);
+    expect(items[1]).toMatchObject({
+      title: 'Nifty & Sensex rise',
+      summary: 'Benchmarks gained on FII buying.',
       source: 'Mint',
-      url: 'https://news.google.com/rss/articles/abc',
+      url: 'https://a.test/2',
     });
   });
-  it('prefers the newest item by publish date', () => {
-    const two = `<item><title>Old story - A</title><link>https://a.test/1</link><pubDate>Fri, 13 Nov 2026 01:00:00 GMT</pubDate></item>
-      <item><title>New story - B</title><link>https://a.test/2</link><pubDate>Sat, 14 Nov 2026 05:00:00 GMT</pubDate></item>`;
-    expect(parseHeadline(two)?.url).toBe('https://a.test/2');
+  it('picks the newest item and ignores stale ones', () => {
+    expect(newest(parseItems(xml, 'Mint'), now)?.url).toBe('https://a.test/2');
+    expect(newest(parseItems(xml, 'Mint').slice(0, 1), now)).toBeNull();
+    expect(newest([], now)).toBeNull();
   });
-  it('returns null without an item or with a non-http link', () => {
-    expect(parseHeadline('<rss></rss>')).toBeNull();
-    expect(parseHeadline('<item><title>a</title><link>javascript:x</link></item>')).toBeNull();
+  it('clips long summaries on a word boundary', () => {
+    const long = `<item><title>t</title><link>https://a.test/3</link><description>${'word '.repeat(80)}</description></item>`;
+    const [item] = parseItems(long, 'x');
+    expect(item.summary.length).toBeLessThanOrEqual(221);
+    expect(item.summary.endsWith('…')).toBe(true);
   });
 });

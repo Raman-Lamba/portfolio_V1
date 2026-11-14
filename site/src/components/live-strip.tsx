@@ -35,7 +35,8 @@ export function Wire({ headline }: { headline: Headline | null }) {
       >
         {headline.title}
       </a>
-      {headline.source && <p className="font-label text-xs uppercase tracking-widest">{headline.source}</p>}
+      {headline.summary && <p className="mt-1 font-body text-sm leading-snug">{headline.summary}</p>}
+      <p className="mt-1 font-label text-xs uppercase tracking-widest">{headline.source}</p>
     </aside>
   );
 }

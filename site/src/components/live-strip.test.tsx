@@ -25,7 +25,8 @@ describe('MarketsStrip', () => {
 
 describe('Wire', () => {
   it('links out safely', () => {
-    render(<Wire headline={{ title: 'Big news', source: 'Mint', url: 'https://example.com/a' }} />);
+    render(<Wire headline={{ title: 'Big news', summary: 'Why it matters.', source: 'Mint', url: 'https://example.com/a' }} />);
+    expect(screen.getByText('Why it matters.')).toBeInTheDocument();
     const a = screen.getByRole('link', { name: 'Big news' });
     expect(a).toHaveAttribute('target', '_blank');
     expect(a).toHaveAttribute('rel', 'noopener noreferrer');
