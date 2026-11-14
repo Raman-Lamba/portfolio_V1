@@ -16,6 +16,10 @@ body {
   font-family: var(--font-body);
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 /* faint paper grain: on the page, and on any element that opts in (a native <dialog> is in the top layer, so it needs its own) */
 body::before,
 .paper-grain::before {
