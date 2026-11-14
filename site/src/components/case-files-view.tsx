@@ -20,11 +20,11 @@ export function CaseFilesView({ folders }: { folders: FolderClippings[] }) {
       </h2>
       <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {folders.map((f) => (
-          <article key={f.id} className="border-2 border-ink bg-ink/10 p-4">
+          <article key={f.id} className="flex flex-col border-2 border-ink bg-ink/10 p-4">
             <h3 className="mb-3 inline-block border-b-2 border-ink pb-0.5 font-label text-xs font-semibold uppercase tracking-widest">
               Case file: {f.label}
             </h3>
-            <ul className="space-y-1 font-body text-sm">
+            <ul className="mb-4 space-y-1 font-body text-sm">
               {f.clippings.map((c) => (
                 <li key={c.slug}>
                   <SmartLink href={`/work/${c.slug}`} className="hover:underline">
@@ -37,7 +37,7 @@ export function CaseFilesView({ folders }: { folders: FolderClippings[] }) {
               type="button"
               aria-haspopup="dialog"
               onClick={() => open(f.id)}
-              className="mt-3 border-2 border-ink px-3 py-1 font-label text-xs uppercase tracking-widest transition-transform duration-100 active:scale-[0.97]"
+              className="mt-auto self-start border-2 border-ink px-3 py-1 font-label text-xs uppercase tracking-widest transition-transform duration-100 active:scale-[0.97]"
             >
               Open case file<span className="sr-only">: {f.label}</span>
             </button>

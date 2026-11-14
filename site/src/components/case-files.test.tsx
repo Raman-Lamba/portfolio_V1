@@ -69,4 +69,13 @@ describe('CaseFiles interaction', () => {
     render(<CaseFiles />);
     expect(screen.getByRole('dialog', { name: 'Case file: Web' })).toBeInTheDocument();
   });
+
+  it('pins every open button to the bottom of its card so they line up', () => {
+    render(<CaseFiles />);
+    for (const s of sections) {
+      const button = screen.getByRole('button', { name: `Open case file: ${s.label}` });
+      expect(button.className).toContain('mt-auto');
+      expect(button.closest('article')!.className).toContain('flex-col');
+    }
+  });
 });
