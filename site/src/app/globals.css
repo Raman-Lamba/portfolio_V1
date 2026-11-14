@@ -25,6 +25,21 @@ html {
   scrollbar-gutter: stable;
 }
 
+/* ---- house style: oxblood highlighter, one focus ring everywhere, lined-up figures (base layer, so utilities still win) ---- */
+@layer base {
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-paper);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  .font-mono {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
 /* faint paper grain: on the page, and on any element that opts in (a native <dialog> is in the top layer, so it needs its own) */
 body::before,
 .paper-grain::before {
@@ -127,4 +142,28 @@ body::before,
 
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
+}
+
+/* ---- the print edition: a newspaper ought to come off a printer looking like one ---- */
+@media print {
+  @page { margin: 1.5cm; }
+  body { background: #fff; }
+  body::before,
+  .paper-grain::before { display: none; }
+  * { animation: none !important; transition: none !important; }
+  /* keep the inked buttons and stamps inked */
+  .bg-burnt,
+  .bg-accent,
+  .stamp { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  /* an outside link is useless on paper without its address */
+  main a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-family: var(--font-mono);
+    font-size: 0.75em;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  article, section, figure, li { break-inside: avoid; }
+  h1, h2, h3 { break-after: avoid; }
 }

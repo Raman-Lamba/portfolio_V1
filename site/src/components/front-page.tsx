@@ -22,16 +22,21 @@ export function FrontPage() {
     <>
       <main id="main" className="mx-auto max-w-6xl px-4 py-6">
         <IndexBox />
-        <Suspense fallback={null}>
-          <LiveMarkets />
-        </Suspense>
+        {/* live strips are fetched in the browser; on paper they would be stale, so the print edition drops them */}
+        <div className="print:hidden">
+          <Suspense fallback={null}>
+            <LiveMarkets />
+          </Suspense>
+        </div>
         <Intro />
         <div className="mt-6 grid gap-6 lg:grid-cols-[2fr_1fr]">
           <LeadStory project={lead} />
           <div className="space-y-4">
-            <Suspense fallback={null}>
-              <LiveWire />
-            </Suspense>
+            <div className="print:hidden">
+              <Suspense fallback={null}>
+                <LiveWire />
+              </Suspense>
+            </div>
             <section aria-labelledby="stories-heading">
               <h2
                 id="stories-heading"
@@ -56,9 +61,11 @@ export function FrontPage() {
             </section>
           </div>
         </div>
-        <Suspense fallback={null}>
-          <LiveMarketReport />
-        </Suspense>
+        <div className="print:hidden">
+          <Suspense fallback={null}>
+            <LiveMarketReport />
+          </Suspense>
+        </div>
         <div className="mt-6">
           <Ad ad={getAd('wanted')} layout="wide" />
         </div>
