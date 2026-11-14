@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Suspense } from 'react';
 import { Old_Standard_TT, Newsreader, UnifrakturCook, Barlow_Condensed, IBM_Plex_Mono } from 'next/font/google';
 import { NavTracker } from '@/components/nav-tracker';
@@ -29,6 +29,9 @@ export const metadata: Metadata = {
   openGraph: { type: 'website', siteName: 'Raman Lamba', title, description, locale: 'en_IN', url: '/' },
   twitter: { card: 'summary_large_image', title, description },
 };
+
+// the browser chrome on a phone takes the colour of the paper, so the page reads as one sheet
+export const viewport: Viewport = { themeColor: '#efe6d0' };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

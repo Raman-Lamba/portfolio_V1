@@ -33,7 +33,7 @@ export function Intro() {
           </h2>
           <div className="mt-4 font-body text-lg leading-[1.45] md:columns-2 md:gap-8 md:[column-rule:1px_solid_var(--color-ink)]">
             {about.paragraphs.map((p) => (
-              <p key={p} className="hyphens-auto text-justify [&:not(:first-child)]:indent-5">
+              <p key={p} className="hyphens-auto md:text-justify [&:not(:first-child)]:indent-5">
                 {p}
               </p>
             ))}
@@ -59,10 +59,10 @@ export function Intro() {
               </ul>
             </div>
             <div className="mt-4 flex gap-3 md:mt-0 md:flex-col">
-              <SmartLink href="#contact" className={`${cta} border-burnt bg-burnt text-center text-paper`}>
+              <SmartLink href="#contact" className={`${cta} flex-1 border-burnt bg-burnt text-center text-paper md:flex-none`}>
                 Hire me
               </SmartLink>
-              <SmartLink href="/resume" className={`${cta} text-center`}>
+              <SmartLink href="/resume" className={`${cta} flex-1 text-center md:flex-none`}>
                 Résumé
               </SmartLink>
             </div>
