@@ -63,17 +63,30 @@ export function ProjectArticle({
           ))}
         </>
       )}
-      {project.link && (
-        <p className="mt-8">
-          <a
-            href={project.link.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-label text-sm font-semibold uppercase tracking-widest text-accent underline underline-offset-4"
-          >
-            {project.link.label}
-            <span aria-hidden="true"> →</span>
-          </a>
+      {(project.link || project.source) && (
+        <p className="mt-8 flex flex-wrap gap-x-6 gap-y-2 font-label text-sm font-semibold uppercase tracking-widest">
+          {project.link && (
+            <a
+              href={project.link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-accent underline underline-offset-4"
+            >
+              {project.link.label}
+              <span aria-hidden="true"> →</span>
+            </a>
+          )}
+          {project.source && (
+            <a
+              href={project.source}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-accent underline underline-offset-4"
+            >
+              Source code on GitHub
+              <span aria-hidden="true"> →</span>
+            </a>
+          )}
         </p>
       )}
     </article>

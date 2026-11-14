@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import { Old_Standard_TT, Newsreader, UnifrakturCook, Barlow_Condensed, IBM_Plex_Mono } from 'next/font/google';
+import { NavTracker } from '@/components/nav-tracker';
 import { SkipLink } from '@/components/skip-link';
 import { agents } from '@/content/agents';
 import { siteUrl } from '@/lib/seo';
@@ -33,6 +35,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${standard.variable} ${news.variable} ${fraktur.variable} ${barlow.variable} ${plex.variable}`}>
       <body>
         <SkipLink />
+        <Suspense fallback={null}>
+          <NavTracker />
+        </Suspense>
         {children}
       </body>
     </html>

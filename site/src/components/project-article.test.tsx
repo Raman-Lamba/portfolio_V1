@@ -49,4 +49,16 @@ describe('ProjectArticle', () => {
     expect(link).toHaveAttribute('target', '_blank');
     expect(link).toHaveAttribute('rel', 'noopener noreferrer');
   });
+
+  it('links to the public source code and the live build when they exist', () => {
+    render(<ProjectArticle project={getProject('lecture-hall-booking')!} />);
+    const source = screen.getByRole('link', { name: /Source code on GitHub/ });
+    expect(source).toHaveAttribute('href', 'https://github.com/Raman-Lamba/Lecture-Hall-Booking');
+    expect(source).toHaveAttribute('rel', 'noopener noreferrer');
+    expect(screen.getByRole('link', { name: /Live site/ })).toHaveAttribute('href', 'https://lecture-hall-booking.vercel.app');
+  });
+  it('shows no source link for work without a public repository', () => {
+    render(<ProjectArticle project={getProject('asian-paints-valuation')!} />);
+    expect(screen.queryByRole('link', { name: /Source code/ })).toBeNull();
+  });
 });

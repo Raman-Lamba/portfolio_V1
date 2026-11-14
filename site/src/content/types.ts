@@ -20,6 +20,8 @@ export type Project = {
   lead?: boolean;
   metrics: Metric[];
   link?: { label: string; href: string };
+  /** Public GitHub repository, only when the repo is public. */
+  source?: string;
 };
 
 export type Bureau = { id: string; org: string; role: string; dates: string; summary: string };

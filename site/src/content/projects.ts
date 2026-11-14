@@ -9,6 +9,7 @@ export const projects: Project[] = [
     sections: ['finance', 'ml-ai'],
     credit: 'Solo entry · Winner, Qiskit Fall Fest 2026',
     year: 2026,
+    source: 'https://github.com/Raman-Lamba/qiskit',
     lead: true,
     metrics: [
       { value: '3.7-20x', label: 'vs penalty QAOA (12 stocks)' },
@@ -23,6 +24,7 @@ export const projects: Project[] = [
     sections: ['finance', 'ml-ai'],
     credit: 'Solo project',
     year: 2026,
+    source: 'https://github.com/Raman-Lamba/Gold-Price-Prediction-using-LSTM-and-CNN',
     metrics: [
       { value: '54-58%', label: 'directional accuracy, 5-day' },
       { value: '18%', label: 'backtested strategy return' },
@@ -37,6 +39,7 @@ export const projects: Project[] = [
     sections: ['finance', 'web'],
     credit: 'Solo project',
     year: 2026,
+    link: { label: 'Play the game', href: 'https://the-options-sims.vercel.app' },
     metrics: [
       { value: '10', label: 'strategies scored per round' },
       { value: '2019-24', label: 'NSE data window' },
@@ -60,6 +63,7 @@ export const projects: Project[] = [
     sections: ['finance'],
     credit: 'Solo project',
     year: 2024,
+    source: 'https://github.com/Raman-Lamba/oems',
     metrics: [{ value: '1 s', label: 'order-book refresh' }],
   },
   {
@@ -93,6 +97,7 @@ export const projects: Project[] = [
     sections: ['web'],
     credit: 'Solo project',
     year: 2026,
+    source: 'https://github.com/Raman-Lamba/Lecture-Hall-Booking',
     metrics: [{ value: '11', label: 'rooms across 3 floors' }],
     link: { label: 'Live site', href: 'https://lecture-hall-booking.vercel.app' },
   },
@@ -104,6 +109,7 @@ export const projects: Project[] = [
     sections: ['ml-ai'],
     credit: 'Solo project',
     year: 2025,
+    source: 'https://github.com/Raman-Lamba/ai-interviewer-better-one',
     metrics: [{ value: '3', label: 'speech-to-text options' }],
   },
   {
@@ -114,6 +120,7 @@ export const projects: Project[] = [
     sections: ['ml-ai', 'web'],
     credit: 'Solo project',
     year: 2025,
+    source: 'https://github.com/Raman-Lamba/MindBloom-Final',
     metrics: [{ value: 'RAG', label: 'answers retrieved from the book' }],
   },
   {
