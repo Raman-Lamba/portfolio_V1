@@ -12,11 +12,13 @@ export function Intro() {
       <div className="grid gap-6 md:grid-cols-[12rem_1fr] md:gap-x-8">
         <figure>
           <Image
-            src={site.photo}
+            src={site.portrait.src}
             alt={`Portrait of ${site.name}`}
-            width={590}
-            height={845}
-            className="h-auto w-36 border border-ink grayscale contrast-125 md:w-full"
+            width={site.portrait.width}
+            height={site.portrait.height}
+            sizes="(min-width: 768px) 12rem, 9rem"
+            priority
+            className="h-auto w-36 border border-ink bg-paper md:w-full"
           />
           <figcaption className="mt-1 border-b border-ink pb-1 font-body text-xs italic">
             {site.name}, MBA (Finance) candidate at IMT Hyderabad.
@@ -36,19 +38,35 @@ export function Intro() {
               </p>
             ))}
           </div>
-          <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
-            <blockquote className="border-l-4 border-accent pl-3 font-display text-2xl italic">
-              {about.pullQuote}
-            </blockquote>
-            <div className="flex gap-3">
-              <SmartLink href="#contact" className={`${cta} bg-ink text-paper`}>
+          <aside
+            aria-labelledby="brief-heading"
+            className="mt-5 border-y-4 border-double border-ink py-4 md:grid md:grid-cols-[1fr_auto] md:items-end md:gap-8"
+          >
+            <div>
+              <h3 id="brief-heading" className="font-label text-xs font-semibold uppercase tracking-[0.3em]">
+                {about.brief.heading}
+              </h3>
+              <p className="mt-1 font-display text-2xl italic leading-tight">{about.pullQuote}</p>
+              <ul className="mt-3 space-y-1.5 font-body leading-snug">
+                {about.brief.items.map((b) => (
+                  <li key={b.lead} className="flex gap-2">
+                    <span aria-hidden="true" className="mt-[0.45em] h-1.5 w-1.5 shrink-0 bg-accent" />
+                    <span>
+                      <strong className="font-label uppercase tracking-wide">{b.lead}</strong> {b.text}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="mt-4 flex gap-3 md:mt-0 md:flex-col">
+              <SmartLink href="#contact" className={`${cta} bg-ink text-center text-paper`}>
                 Hire me
               </SmartLink>
-              <SmartLink href="/resume" className={cta}>
+              <SmartLink href="/resume" className={`${cta} text-center`}>
                 Résumé
               </SmartLink>
             </div>
-          </div>
+          </aside>
         </div>
       </div>
     </section>

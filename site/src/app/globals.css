@@ -36,6 +36,65 @@ body::before,
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 }
 
+/* ---- the press run: the nameplate is inked in from the left, then the rules and tagline settle ---- */
+@keyframes press-ink {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+@keyframes press-rule {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes press-settle {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+.masthead-plate { animation: press-ink 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.masthead-rule { transform-origin: left; animation: press-rule 0.6s 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.masthead-tagline,
+.masthead-edition { animation: press-settle 0.4s 0.55s ease-out both; }
+
+/* ---- rubber stamp: uneven ink via a grain mask, multiplied into the paper ---- */
+.stamp {
+  mix-blend-mode: multiply;
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.6 2.1'/></filter><rect width='100%' height='100%' filter='url(%23g)'/></svg>");
+  mask-size: 120px 120px;
+}
+
+/* ---- manila folder front: a soft crease and a worn lower edge ---- */
+.folder-front::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgba(27, 22, 18, 0.08), transparent 10%),
+    linear-gradient(to top, rgba(27, 22, 18, 0.06), transparent 12%);
+}
+
+/* ---- sticky tape on a clipping ---- */
+.tape {
+  background: rgba(245, 238, 215, 0.7);
+  border-left: 1px dashed rgba(27, 22, 18, 0.35);
+  border-right: 1px dashed rgba(27, 22, 18, 0.35);
+  box-shadow: 0 1px 2px rgba(27, 22, 18, 0.15);
+}
+
+/* ---- press pass: a punched hole shows the paper through the band ---- */
+.press-pass::before {
+  content: "";
+  position: absolute;
+  top: 0.55rem;
+  left: 50%;
+  width: 0.875rem;
+  height: 0.875rem;
+  transform: translateX(-50%);
+  border-radius: 9999px;
+  background: var(--color-paper);
+  box-shadow: inset 0 1px 2px rgba(27, 22, 18, 0.5);
+  z-index: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
 }
