@@ -10,7 +10,7 @@ import { Stamp } from './stamp';
 
 const SHOWN = 4;
 const page = navItems.find((n) => n.id === 'files')?.page;
-const tilts = ['-5deg', '7deg', '-8deg', '4deg'];
+const stampTilt = '-5deg';
 
 export function CaseFilesView({ folders }: { folders: FolderClippings[] }) {
   const ids = useMemo(() => folders.map((f) => f.id), [folders]);
@@ -27,7 +27,7 @@ export function CaseFilesView({ folders }: { folders: FolderClippings[] }) {
         {folders.map((f, i) => (
           <article key={f.id} className="group relative flex flex-col">
             {/* tab */}
-            <div className="relative z-10 -mb-[2px] w-fit rounded-t-md border-2 border-b-0 border-ink bg-manila px-3 py-1">
+            <div className="relative z-10 -mb-[2px] w-[60%] rounded-t-md border-2 border-b-0 border-ink bg-manila px-3 py-1">
               <h3 className="font-label text-xs font-semibold uppercase tracking-widest">
                 Case file: {f.label}
               </h3>
@@ -36,14 +36,14 @@ export function CaseFilesView({ folders }: { folders: FolderClippings[] }) {
             <div className="relative flex flex-1 flex-col rounded-b-md rounded-tr-md border-2 border-ink bg-manila transition-[transform,box-shadow] duration-150 group-hover:-translate-y-1 group-hover:shadow-[0_10px_22px_rgba(27,22,18,0.22)] group-focus-within:-translate-y-1 group-focus-within:shadow-[0_10px_22px_rgba(27,22,18,0.22)] motion-reduce:transition-none motion-reduce:group-hover:transform-none">
               <div
                 aria-hidden="true"
-                className="absolute -top-4 left-[52%] right-3 h-10 -rotate-2 border border-ink bg-sheet transition-transform duration-150 group-hover:-translate-y-2 group-focus-within:-translate-y-2 motion-reduce:transition-none"
+                className="absolute -top-4 left-[64%] right-3 h-10 -rotate-2 border border-ink bg-sheet transition-transform duration-150 group-hover:-translate-y-2 group-focus-within:-translate-y-2 motion-reduce:transition-none"
               />
               <div
                 aria-hidden="true"
-                className="absolute -top-2 left-[48%] right-6 h-10 rotate-1 border border-ink bg-paper transition-transform duration-150 group-hover:-translate-y-1 group-focus-within:-translate-y-1 motion-reduce:transition-none"
+                className="absolute -top-2 left-[62%] right-6 h-10 rotate-1 border border-ink bg-paper transition-transform duration-150 group-hover:-translate-y-1 group-focus-within:-translate-y-1 motion-reduce:transition-none"
               />
               <div className="folder-front relative mt-5 flex flex-1 flex-col border-t-2 border-ink bg-manila-dark p-4 transition-transform duration-150 [transform-origin:bottom] group-hover:[transform:perspective(700px)_rotateX(-5deg)] motion-reduce:transition-none motion-reduce:group-hover:transform-none">
-                <Stamp className="absolute right-3 top-3 opacity-80" tilt={tilts[i % tilts.length]}>
+                <Stamp className="absolute right-3 top-3 opacity-80" tilt={stampTilt}>
                   Filed
                 </Stamp>
                 <p className="font-mono text-xs uppercase tracking-widest text-accent">
