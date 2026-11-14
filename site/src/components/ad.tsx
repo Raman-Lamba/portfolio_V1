@@ -4,13 +4,13 @@ import { SmartLink } from './smart-link';
 
 export function Ad({ ad, layout }: { ad: AdData; layout: 'tall' | 'wide' }) {
   const coupon = ad.href === '#contact';
-  const frame = coupon ? 'border-2 border-dashed' : 'border-4 border-double';
+  const frame = coupon ? 'marching border-2 border-transparent' : 'border-4 border-double border-ink';
   const shape =
     layout === 'tall'
       ? 'flex flex-col items-center justify-center gap-3 py-10'
       : 'flex flex-col items-center justify-between gap-3 sm:flex-row';
   return (
-    <aside aria-label={`Advertisement: ${ad.headline}`} className={`${frame} ${shape} border-ink p-4 text-center`}>
+    <aside aria-label={`Advertisement: ${ad.headline}`} className={`${frame} ${shape} p-4 text-center`}>
       {layout === 'wide' && (
         <Image
           src={`/images/ads/${ad.id}.png`}

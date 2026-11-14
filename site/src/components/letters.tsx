@@ -20,7 +20,7 @@ export function Letters() {
       </SectionHeading>
       <p className="mt-3 font-body">Commissions, roles, questions: write in.</p>
       {/* the coupon: dashed cut line, scissors, two pre-addressed envelopes */}
-      <div className="coupon relative mt-4 border-2 border-dashed border-ink p-4 pt-5">
+      <div className="coupon marching relative mt-4 border-2 border-transparent p-4 pt-5">
         <span
           aria-hidden="true"
           className="absolute -top-3 left-4 bg-paper px-1 font-label text-xs uppercase tracking-[0.3em]"
