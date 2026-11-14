@@ -55,7 +55,7 @@ function Table({ region, rows }: { region: Region; rows: Quote[] }) {
           <p className="mt-1 font-mono text-xs">As of {asOf(region, lead.time)}</p>
         </div>
         <p
-          className={`border-2 px-2 py-0.5 font-label text-xs font-semibold uppercase tracking-[0.25em] ${open ? 'border-accent text-accent' : 'border-ink'}`}
+          className={`border-2 px-2 py-0.5 font-label text-xs font-semibold uppercase tracking-[0.25em] ${open ? 'border-burnt text-burnt' : 'border-ink'}`}
         >
           {open ? 'Market open' : 'Market closed'}
         </p>

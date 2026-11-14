@@ -68,9 +68,9 @@ export function CaseFilesView({ folders }: { folders: FolderClippings[] }) {
                 </ul>
                 <p
                   aria-hidden="true"
-                  className="mt-auto pt-4 font-label text-sm font-semibold uppercase tracking-widest text-accent"
+                  className="mt-auto pt-4 font-label text-sm font-semibold uppercase tracking-widest"
                 >
-                  Open the folder →
+                  <span className="inline-block bg-burnt px-3 py-1 text-paper">Open the folder →</span>
                 </p>
               </div>
             </div>

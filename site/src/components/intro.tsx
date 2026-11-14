@@ -59,7 +59,7 @@ export function Intro() {
               </ul>
             </div>
             <div className="mt-4 flex gap-3 md:mt-0 md:flex-col">
-              <SmartLink href="#contact" className={`${cta} bg-ink text-center text-paper`}>
+              <SmartLink href="#contact" className={`${cta} border-burnt bg-burnt text-center text-paper`}>
                 Hire me
               </SmartLink>
               <SmartLink href="/resume" className={`${cta} text-center`}>

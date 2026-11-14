@@ -4,6 +4,7 @@
   --color-paper: #efe6d0;
   --color-ink: #1b1612;
   --color-accent: #8b1e1e;
+  --color-burnt: #b04510;
   --color-manila: #dcc48e;
   --color-manila-dark: #cdb277;
   --color-sheet: #f7f0de;
@@ -53,6 +54,26 @@ body::before,
 .masthead-rule { transform-origin: left; animation: press-rule 0.6s 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
 .masthead-tagline,
 .masthead-edition { animation: press-settle 0.4s 0.55s ease-out both; }
+
+/* ---- clipping border: dashes that march around the box (the colour turns burnt orange on hover) ---- */
+.marching {
+  --dash: var(--color-ink);
+  background-origin: border-box;
+  background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+  background-size: 12px 2px, 12px 2px, 2px 12px, 2px 12px;
+  background-position: 0 0, 0 100%, 0 0, 100% 0;
+  background-image:
+    linear-gradient(90deg, var(--dash) 50%, transparent 0),
+    linear-gradient(90deg, var(--dash) 50%, transparent 0),
+    linear-gradient(0deg, var(--dash) 50%, transparent 0),
+    linear-gradient(0deg, var(--dash) 50%, transparent 0);
+  animation: march 1s linear infinite;
+}
+.marching:hover,
+.marching:focus-within { --dash: var(--color-burnt); }
+@keyframes march {
+  to { background-position: 12px 0, -12px 100%, 0 -12px, 100% 12px; }
+}
 
 /* ---- a page settles in when an article opens ---- */
 @keyframes page-in {

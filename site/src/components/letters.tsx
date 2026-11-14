@@ -32,7 +32,7 @@ export function Letters() {
             <a
               key={s.id}
               href={mailto(s.subject)}
-              className={`inline-block border-2 border-ink px-4 py-2 font-label text-sm uppercase tracking-widest transition duration-100 active:scale-[0.97] hover:border-accent hover:bg-accent hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${i === 0 ? 'bg-ink text-paper' : ''}`}
+              className={`inline-block border-2 border-ink px-4 py-2 font-label text-sm uppercase tracking-widest transition duration-100 active:scale-[0.97] hover:border-accent hover:bg-accent hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${i === 0 ? 'border-burnt bg-burnt text-paper' : ''}`}
             >
               {s.label}
             </a>

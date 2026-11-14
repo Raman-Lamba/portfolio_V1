@@ -76,7 +76,7 @@ export function CaseFileDialog({ label, clippings, onClose }: Props) {
             >
               <div
                 style={{ '--r': `${fan[i].rotate}deg` } as React.CSSProperties}
-                className="clipping group relative border-2 border-ink bg-paper p-3 shadow-[0_10px_24px_rgba(27,22,18,0.16)] transition-[translate,rotate] duration-200 ease-out hover:-translate-y-1 focus-within:-translate-y-1 motion-reduce:transition-none md:rotate-(--r) md:hover:rotate-0 md:focus-within:rotate-0"
+                className="clipping marching group relative border-2 border-transparent bg-paper p-3 shadow-[0_10px_24px_rgba(27,22,18,0.16)] transition-[translate,rotate] duration-200 ease-out hover:-translate-y-1 focus-within:-translate-y-1 motion-reduce:transition-none md:rotate-(--r) md:hover:rotate-0 md:focus-within:rotate-0"
               >
               <span aria-hidden="true" className="tape absolute -top-2.5 left-1/2 h-5 w-20 -translate-x-1/2 -rotate-2" />
               {c.figure && (

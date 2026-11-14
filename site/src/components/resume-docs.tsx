@@ -10,6 +10,7 @@ function Sheet({
   download,
   tilt,
   className,
+  primary,
   children,
 }: {
   href: string;
@@ -18,6 +19,7 @@ function Sheet({
   download?: boolean;
   tilt: string;
   className: string;
+  primary?: boolean;
   children: React.ReactNode;
 }) {
   const style: Tilt = { '--r': tilt };
@@ -37,7 +39,7 @@ function Sheet({
       </span>
       <span
         aria-hidden="true"
-        className="absolute bottom-2 right-2 border border-ink bg-paper px-2 py-0.5 font-label text-[0.65rem] uppercase tracking-widest group-hover:bg-ink group-hover:text-paper"
+        className={`absolute bottom-2 right-2 border px-2 py-0.5 font-label text-[0.65rem] uppercase tracking-widest group-hover:bg-ink group-hover:text-paper ${primary ? 'border-burnt bg-burnt text-paper' : 'border-ink bg-paper'}`}
       >
         {cta}
       </span>
@@ -82,7 +84,7 @@ export function ResumeDocs() {
           {entry(jobs[1])}
           {entry(jobs[2])}
         </Sheet>
-        <Sheet href={site.resumePdf} download tag="PDF" cta="Download ↓" tilt="2.5deg" className="right-0 top-8">
+        <Sheet href={site.resumePdf} download primary tag="PDF" cta="Download ↓" tilt="2.5deg" className="right-0 top-8">
           <strong className="block uppercase tracking-widest">Education</strong>
           {resumeFull.education.map((e) => (
             <span key={e.school} className="block">

@@ -26,7 +26,7 @@ export function Ad({ ad, layout }: { ad: AdData; layout: 'tall' | 'wide' }) {
       <p className="font-body italic">{ad.body}</p>
       <SmartLink
         href={ad.href}
-        className="font-label text-sm font-semibold uppercase tracking-widest text-accent underline underline-offset-4"
+        className={`font-label text-sm font-semibold uppercase tracking-widest ${coupon ? 'bg-burnt px-3 py-1.5 text-paper hover:bg-ink' : 'text-burnt underline underline-offset-4'}`}
       >
         <span aria-hidden="true">{coupon ? '✂ ' : ''}</span>
         {ad.cta}

@@ -5,7 +5,10 @@ export function Masthead({ now }: { now?: Date }) {
   return (
     <header className="masthead px-4 pt-3">
       <div className="flex flex-col gap-2 font-label text-xs uppercase tracking-[0.18em] sm:flex-row sm:justify-between sm:gap-4">
-        <p className="w-fit border border-ink px-2 py-1 leading-none">{site.availability}</p>
+        <p className="w-fit border border-ink px-2 py-1 leading-none">
+          <span aria-hidden="true" className="mr-1.5 text-burnt">●</span>
+          {site.availability}
+        </p>
         <p className="sm:text-right">
           <span className="block">{site.location}</span>
           <Dateline now={now} className="block min-h-[1em]" />
