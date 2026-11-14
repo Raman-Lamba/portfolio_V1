@@ -22,11 +22,11 @@ export function Ad({ ad, layout }: { ad: AdData; layout: 'tall' | 'wide' }) {
         />
       )}
       <p className="font-label text-[0.7rem] uppercase tracking-[0.3em]">Advertisement</p>
-      <p className="font-display text-2xl font-black uppercase leading-tight">{ad.headline}</p>
+      <p className="font-display text-2xl font-black uppercase leading-tight text-balance">{ad.headline}</p>
       <p className="font-body italic">{ad.body}</p>
       <SmartLink
         href={ad.href}
-        className={`font-label text-sm font-semibold uppercase tracking-widest ${coupon ? 'bg-burnt px-3 py-1.5 text-paper hover:bg-ink' : 'text-burnt underline underline-offset-4'}`}
+        className={`inline-block font-label text-sm font-semibold uppercase tracking-widest ${coupon ? 'bg-burnt px-3 py-2.5 text-paper hover:bg-ink' : 'py-2 text-burnt underline underline-offset-4'}`}
       >
         <span aria-hidden="true">{coupon ? '✂ ' : ''}</span>
         {ad.cta}

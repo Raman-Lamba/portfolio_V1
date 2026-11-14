@@ -39,7 +39,7 @@ function Sheet({
       </span>
       <span
         aria-hidden="true"
-        className={`absolute bottom-2 right-2 border px-2 py-0.5 font-label text-[0.65rem] uppercase tracking-widest group-hover:bg-ink group-hover:text-paper ${primary ? 'border-burnt bg-burnt text-paper' : 'border-ink bg-paper'}`}
+        className={`absolute bottom-2 border px-2 py-0.5 font-label text-[0.65rem] uppercase tracking-widest group-hover:bg-ink group-hover:text-paper ${primary ? 'right-2 border-burnt bg-burnt text-paper' : 'left-2 border-ink bg-paper'}`}
       >
         {cta}
       </span>

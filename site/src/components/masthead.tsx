@@ -15,7 +15,10 @@ export function Masthead({ now }: { now?: Date }) {
           <span className="block">{site.volume}</span>
         </p>
       </div>
-      <h1 className="masthead-plate mt-2 text-center font-masthead text-6xl sm:text-8xl">{site.name}</h1>
+      {/* fluid below 390px so the nameplate stays on one line on small phones */}
+      <h1 className="masthead-plate mt-2 whitespace-nowrap text-center font-masthead text-[clamp(2.5rem,15.5vw,3.75rem)] sm:text-8xl">
+        {site.name}
+      </h1>
       <p className="masthead-tagline mt-1 text-center font-label text-sm uppercase tracking-[0.3em]">
         {site.tagline}
       </p>
