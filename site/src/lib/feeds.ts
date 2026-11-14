@@ -1,5 +1,7 @@
-export type Quote = { label: string; price: number; changePct: number };
+export type Quote = { label: string; price: number; changePct: number; time?: number; open?: boolean };
 export type Headline = { title: string; summary: string; source: string; url: string };
+export type Region = 'India' | 'US';
+export type MarketReport = Record<Region, Quote[]>;
 
 const symbols = [
   { label: 'Nifty 50', symbol: '^NSEI' },
@@ -7,15 +9,65 @@ const symbols = [
   { label: 'USD/INR', symbol: 'INR=X' },
 ] as const;
 
-type Meta = { regularMarketPrice?: number; chartPreviousClose?: number; previousClose?: number };
+const regions: Record<Region, { label: string; symbol: string }[]> = {
+  India: [
+    { label: 'Nifty 50', symbol: '^NSEI' },
+    { label: 'Sensex', symbol: '^BSESN' },
+    { label: 'Bank Nifty', symbol: '^NSEBANK' },
+    { label: 'India VIX', symbol: '^INDIAVIX' },
+  ],
+  US: [
+    { label: 'S&P 500', symbol: '^GSPC' },
+    { label: 'Dow Jones', symbol: '^DJI' },
+    { label: 'Nasdaq', symbol: '^IXIC' },
+    { label: 'VIX', symbol: '^VIX' },
+  ],
+};
+
+type Meta = {
+  regularMarketPrice?: number;
+  regularMarketChangePercent?: number;
+  regularMarketTime?: number;
+  currentTradingPeriod?: { regular?: { start?: number; end?: number } };
+};
+type Chart = {
+  chart?: { result?: { meta?: Meta; indicators?: { quote?: { close?: (number | null)[] }[] } }[] };
+};
 
 // Pure: turns one Yahoo chart payload into a quote, or null when the numbers are missing.
-export function parseQuote(label: string, json: unknown): Quote | null {
-  const meta = (json as { chart?: { result?: { meta?: Meta }[] } })?.chart?.result?.[0]?.meta;
+// The day's change comes from Yahoo's own daily figure, else from the last two daily closes
+// (never from `chartPreviousClose`, which is the close before the whole 5-day range).
+export function parseQuote(label: string, json: unknown, now = Date.now()): Quote | null {
+  const result = (json as Chart)?.chart?.result?.[0];
+  const meta = result?.meta;
   const price = meta?.regularMarketPrice;
-  const prev = meta?.chartPreviousClose ?? meta?.previousClose;
-  if (typeof price !== 'number' || typeof prev !== 'number' || prev === 0) return null;
-  return { label, price, changePct: ((price - prev) / prev) * 100 };
+  if (typeof price !== 'number') return null;
+  let changePct = meta?.regularMarketChangePercent;
+  if (typeof changePct !== 'number') {
+    const closes = (result?.indicators?.quote?.[0]?.close ?? []).filter((c): c is number => typeof c === 'number');
+    const prev = closes[closes.length - 2];
+    if (!prev) return null;
+    changePct = ((price - prev) / prev) * 100;
+  }
+  const period = meta?.currentTradingPeriod?.regular;
+  const time = meta?.regularMarketTime ? meta.regularMarketTime * 1000 : undefined;
+  const open = period?.start && period?.end ? now >= period.start * 1000 && now <= period.end * 1000 : undefined;
+  return { label, price, changePct, time, open };
+}
+
+// Pure: one plain sentence from the numbers (fixed rules, no generated text).
+export function summarise(region: Region, rows: Quote[]): string {
+  const [lead, , , vix] = rows;
+  if (!lead) return '';
+  const open = lead.open === true;
+  const flat = Math.abs(lead.changePct) < 0.15;
+  const dir = lead.changePct > 0 ? 'higher' : 'lower';
+  const name = region === 'India' ? 'Indian equities' : 'US equities';
+  const move = `${lead.label} ${lead.changePct >= 0 ? '+' : '-'}${Math.abs(lead.changePct).toFixed(2)}%`;
+  const verb = flat ? (open ? 'are flat' : 'ended flat') : open ? `are trading ${dir}` : `ended ${dir}`;
+  const vol =
+    vix && Math.abs(vix.changePct) >= 5 ? `; volatility ${vix.changePct > 0 ? 'rising' : 'easing'} (${vix.label} ${vix.changePct > 0 ? '+' : '-'}${Math.abs(vix.changePct).toFixed(1)}%)` : '';
+  return `${name} ${verb}: ${move}${vol}.`;
 }
 
 const feedSources = [
@@ -76,9 +128,9 @@ async function get(url: string): Promise<Response | null> {
   }
 }
 
-export async function fetchQuotes(): Promise<Quote[]> {
+async function quotesFor(defs: readonly { label: string; symbol: string }[]): Promise<Quote[]> {
   const all = await Promise.all(
-    symbols.map(async ({ label, symbol }) => {
+    defs.map(async ({ label, symbol }) => {
       const res = await get(
         `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?interval=1d&range=5d`,
       );
@@ -86,6 +138,13 @@ export async function fetchQuotes(): Promise<Quote[]> {
     }),
   );
   return all.filter((q): q is Quote => q !== null);
+}
+
+export const fetchQuotes = () => quotesFor(symbols);
+
+export async function fetchMarketReport(): Promise<MarketReport> {
+  const [India, US] = await Promise.all([quotesFor(regions.India), quotesFor(regions.US)]);
+  return { India, US };
 }
 
 export async function fetchHeadline(): Promise<Headline | null> {

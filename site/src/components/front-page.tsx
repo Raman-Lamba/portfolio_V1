@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { getAd, getLead, getStories } from '@/content/queries';
 import { LiveMarkets, LiveWire } from './live-strip';
+import { LiveMarketReport } from './market-report';
 import { Ad } from './ad';
 import { Bureaus } from './bureaus';
 import { CaseFiles } from './case-files';
@@ -54,6 +55,9 @@ export function FrontPage() {
             </section>
           </div>
         </div>
+        <Suspense fallback={null}>
+          <LiveMarketReport />
+        </Suspense>
         <div className="mt-6">
           <Ad ad={getAd('wanted')} layout="wide" />
         </div>
