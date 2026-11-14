@@ -12,6 +12,7 @@ import { Intro } from './intro';
 import { LeadStory } from './lead-story';
 import { Letters } from './letters';
 import { ResumeDocs } from './resume-docs';
+import { SportsDesk } from './sports-desk';
 import { StoryCard } from './story-card';
 
 export function FrontPage() {
@@ -67,8 +68,9 @@ export function FrontPage() {
           <Ad ad={getAd('backtest')} layout="wide" />
         </div>
         <div className="mt-8 grid gap-8 lg:grid-cols-2 lg:divide-x lg:divide-ink">
-          <div className="lg:pr-6">
+          <div className="space-y-8 lg:pr-6">
             <Classifieds />
+            <SportsDesk />
           </div>
           <div className="space-y-8 lg:pl-6">
             <Letters />
