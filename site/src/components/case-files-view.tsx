@@ -33,16 +33,20 @@ export function CaseFilesView({ folders }: { folders: FolderClippings[] }) {
               </h3>
             </div>
             {/* body: papers poke out of the top and rise on hover; the folder lifts off the desk */}
-            <div className="relative flex flex-1 flex-col rounded-b-md rounded-tr-md border-2 border-ink bg-manila transition-[transform,box-shadow] duration-150 group-hover:-translate-y-1 group-hover:shadow-[0_10px_22px_rgba(27,22,18,0.22)] group-focus-within:-translate-y-1 group-focus-within:shadow-[0_10px_22px_rgba(27,22,18,0.22)] motion-reduce:transition-none motion-reduce:group-hover:transform-none">
-              <div
+            <div className="relative flex flex-1 flex-col rounded-b-md rounded-tr-md border-2 border-ink bg-manila transition-[translate] duration-200 ease-out group-hover:-translate-y-1 group-focus-within:-translate-y-1 motion-reduce:transition-none">
+              <span
                 aria-hidden="true"
-                className="absolute -top-4 left-[64%] right-3 h-10 -rotate-2 border border-ink bg-sheet transition-transform duration-150 group-hover:-translate-y-2 group-focus-within:-translate-y-2 motion-reduce:transition-none"
+                className="pointer-events-none absolute inset-0 -z-10 rounded-b-md shadow-[0_10px_22px_rgba(27,22,18,0.22)] opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100 motion-reduce:transition-none"
               />
               <div
                 aria-hidden="true"
-                className="absolute -top-2 left-[62%] right-6 h-10 rotate-1 border border-ink bg-paper transition-transform duration-150 group-hover:-translate-y-1 group-focus-within:-translate-y-1 motion-reduce:transition-none"
+                className="absolute -top-4 left-[64%] right-3 h-10 -rotate-2 border border-ink bg-sheet transition-[translate] duration-200 ease-out group-hover:-translate-y-2 group-focus-within:-translate-y-2 motion-reduce:transition-none"
               />
-              <div className="folder-front relative mt-5 flex flex-1 flex-col border-t-2 border-ink bg-manila-dark p-4 transition-transform duration-150 [transform-origin:bottom] group-hover:[transform:perspective(700px)_rotateX(-5deg)] motion-reduce:transition-none motion-reduce:group-hover:transform-none">
+              <div
+                aria-hidden="true"
+                className="absolute -top-2 left-[62%] right-6 h-10 rotate-1 border border-ink bg-paper transition-[translate] duration-200 ease-out group-hover:-translate-y-1 group-focus-within:-translate-y-1 motion-reduce:transition-none"
+              />
+              <div className="folder-front relative mt-5 flex flex-1 flex-col border-t-2 border-ink bg-manila-dark p-4 transition-transform duration-200 ease-out [transform-origin:bottom] group-hover:[transform:perspective(700px)_rotateX(-5deg)] motion-reduce:transition-none motion-reduce:group-hover:transform-none">
                 <Stamp className="absolute right-3 top-3 opacity-80" tilt={stampTilt}>
                   Filed
                 </Stamp>

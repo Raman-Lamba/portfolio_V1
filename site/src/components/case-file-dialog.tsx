@@ -13,6 +13,7 @@ export function CaseFileDialog({ label, clippings, onClose }: Props) {
   const titleId = useId();
   const reduce = useReducedMotion();
   const [closing, setClosing] = useState(false);
+  const [shown, setShown] = useState(false);
   const fan = fanLayout(clippings.length);
 
   useEffect(() => {
@@ -20,9 +21,12 @@ export function CaseFileDialog({ label, clippings, onClose }: Props) {
     const opener = document.activeElement as HTMLElement | null;
     dialog?.showModal();
     dialog?.focus();
+    // fade in on the next frame so the opacity transition has a start state
+    const frame = requestAnimationFrame(() => setShown(true));
     const previous = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     return () => {
+      cancelAnimationFrame(frame);
       document.body.style.overflow = previous;
       dialog?.close();
       if (opener?.isConnected) opener.focus({ preventScroll: true });
@@ -31,7 +35,7 @@ export function CaseFileDialog({ label, clippings, onClose }: Props) {
 
   useEffect(() => {
     if (!closing) return;
-    const t = window.setTimeout(onClose, reduce ? 0 : 150);
+    const t = window.setTimeout(onClose, reduce ? 0 : 200);
     return () => window.clearTimeout(t);
   }, [closing, onClose, reduce]);
 
@@ -49,7 +53,7 @@ export function CaseFileDialog({ label, clippings, onClose }: Props) {
       onClick={(e) => {
         if (e.target === e.currentTarget) requestClose();
       }}
-      className={`paper-grain fixed inset-0 m-0 h-dvh max-h-none w-dvw max-w-none overflow-y-auto border-0 bg-paper/90 p-0 outline-none backdrop:backdrop-blur-sm text-ink transition-opacity duration-150 ${closing ? 'opacity-0' : 'opacity-100'}`}
+      className={`paper-grain fixed inset-0 m-0 h-dvh max-h-none w-dvw max-w-none overflow-y-auto border-0 bg-paper/95 p-0 outline-none backdrop:bg-ink/10 text-ink transition-opacity duration-200 ease-out ${closing || !shown ? 'opacity-0' : 'opacity-100'}`}
     >
       <div className="mx-auto max-w-6xl px-4 pb-28 pt-10">
         <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2 border-b-2 border-ink pb-1">
@@ -64,12 +68,16 @@ export function CaseFileDialog({ label, clippings, onClose }: Props) {
           {clippings.map((c, i) => (
             <motion.li
               key={c.slug}
-              initial={reduce ? false : { opacity: 0, y: 28 }}
+              initial={reduce ? false : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.28, ease: [0.23, 1, 0.32, 1], delay: i * 0.05 }}
-              style={{ '--r': `${fan[i].rotate}deg`, '--lift': `${fan[i].lift}px` } as React.CSSProperties}
-              className="clipping group relative self-start border-2 border-ink bg-paper p-3 shadow-[0_10px_24px_rgba(27,22,18,0.16)] transition-transform duration-150 hover:-translate-y-1 focus-within:-translate-y-1 motion-reduce:transition-none md:mt-(--lift) md:rotate-(--r) md:hover:rotate-0 md:focus-within:rotate-0"
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1], delay: 0.08 + i * 0.06 }}
+              style={{ '--lift': `${fan[i].lift}px` } as React.CSSProperties}
+              className="self-start md:mt-(--lift)"
             >
+              <div
+                style={{ '--r': `${fan[i].rotate}deg` } as React.CSSProperties}
+                className="clipping group relative border-2 border-ink bg-paper p-3 shadow-[0_10px_24px_rgba(27,22,18,0.16)] transition-[translate,rotate] duration-200 ease-out hover:-translate-y-1 focus-within:-translate-y-1 motion-reduce:transition-none md:rotate-(--r) md:hover:rotate-0 md:focus-within:rotate-0"
+              >
               <span aria-hidden="true" className="tape absolute -top-2.5 left-1/2 h-5 w-20 -translate-x-1/2 -rotate-2" />
               {c.figure && (
                 <Image
@@ -93,6 +101,7 @@ export function CaseFileDialog({ label, clippings, onClose }: Props) {
                 </SmartLink>
               </h3>
               <p className="mt-1 font-body text-sm italic">{c.credit}</p>
+              </div>
             </motion.li>
           ))}
         </ul>

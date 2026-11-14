@@ -66,7 +66,7 @@ describe('CaseFileDialog', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Close case file' }));
     expect(onClose).not.toHaveBeenCalled();
     act(() => {
-      vi.advanceTimersByTime(150);
+      vi.advanceTimersByTime(200);
     });
     expect(onClose).toHaveBeenCalledTimes(1);
   });
@@ -79,7 +79,7 @@ describe('CaseFileDialog', () => {
     fireEvent(dialog, cancel);
     expect(cancel.defaultPrevented).toBe(true);
     act(() => {
-      vi.advanceTimersByTime(150);
+      vi.advanceTimersByTime(200);
     });
     expect(onClose).toHaveBeenCalledTimes(1);
   });
@@ -95,16 +95,14 @@ describe('CaseFileDialog', () => {
     expect(onClose).not.toHaveBeenCalled();
     fireEvent.click(dialog);
     act(() => {
-      vi.advanceTimersByTime(150);
+      vi.advanceTimersByTime(200);
     });
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  it('blurs the backdrop layer, not the dialog (keeps fixed children fixed)', () => {
+  it('uses no blur anywhere (a full-screen blur makes the open and close animation stutter)', () => {
     render(<CaseFileDialog label={web.label} clippings={web.clippings} onClose={() => {}} />);
-    const dialog = screen.getByRole('dialog');
-    expect(dialog.className).toContain('backdrop:backdrop-blur-sm');
-    expect(dialog.className).not.toMatch(/(^|\s)backdrop-blur-sm/);
+    expect(screen.getByRole('dialog').className).not.toMatch(/blur/);
   });
 
   it('returns focus to the opener on unmount', () => {

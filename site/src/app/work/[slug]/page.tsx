@@ -26,7 +26,7 @@ export default async function WorkPage({ params }: Props) {
   return (
     <>
       <BackBar />
-      <main id="main">
+      <main id="main" className="page-in">
         <ProjectArticle project={project} details={getDetails(slug)} figures={getFigures(slug)} />
         <RelatedStories projects={getRelated(slug)} />
       </main>
