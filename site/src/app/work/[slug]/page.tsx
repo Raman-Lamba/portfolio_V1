@@ -3,7 +3,8 @@ import { notFound } from 'next/navigation';
 import { BackBar } from '@/components/back-bar';
 import { Footer } from '@/components/footer';
 import { ProjectArticle } from '@/components/project-article';
-import { getDetails, getFigures, getProject, getProjectSlugs } from '@/content/queries';
+import { RelatedStories } from '@/components/related-stories';
+import { getDetails, getFigures, getProject, getProjectSlugs, getRelated } from '@/content/queries';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -27,6 +28,7 @@ export default async function WorkPage({ params }: Props) {
       <BackBar />
       <main id="main">
         <ProjectArticle project={project} details={getDetails(slug)} figures={getFigures(slug)} />
+        <RelatedStories projects={getRelated(slug)} />
       </main>
       <Footer />
     </>

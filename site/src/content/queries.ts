@@ -48,6 +48,24 @@ export function getFigures(slug: string): ProjectFigure[] {
   return projectFigures[slug] ?? [];
 }
 
+// Up to `n` other projects that share a section with this one, nearest sections first.
+export function getRelated(slug: string, n = 3): Project[] {
+  const me = getProject(slug);
+  if (!me) return [];
+  const seen = new Set<string>([slug]);
+  const out: Project[] = [];
+  for (const s of me.sections) {
+    for (const p of projects) {
+      if (out.length >= n) return out;
+      if (!seen.has(p.slug) && p.sections.includes(s)) {
+        seen.add(p.slug);
+        out.push(p);
+      }
+    }
+  }
+  return out;
+}
+
 export type Clipping = {
   slug: string;
   title: string;

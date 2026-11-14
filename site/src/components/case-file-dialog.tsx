@@ -5,7 +5,6 @@ import { motion, useReducedMotion } from 'motion/react';
 import type { Clipping } from '@/content/queries';
 import { fanLayout } from '@/lib/fan-layout';
 import { SmartLink } from './smart-link';
-import { Stamp } from './stamp';
 
 type Props = { label: string; clippings: Clipping[]; onClose: () => void };
 
@@ -72,11 +71,6 @@ export function CaseFileDialog({ label, clippings, onClose }: Props) {
               className="clipping group relative self-start border-2 border-ink bg-paper p-3 shadow-[0_10px_24px_rgba(27,22,18,0.16)] transition-transform duration-150 hover:-translate-y-1 focus-within:-translate-y-1 motion-reduce:transition-none md:mt-(--lift) md:rotate-(--r) md:hover:rotate-0 md:focus-within:rotate-0"
             >
               <span aria-hidden="true" className="tape absolute -top-2.5 left-1/2 h-5 w-20 -translate-x-1/2 -rotate-2" />
-              {i === 0 && (
-                <Stamp className="absolute -right-2 top-3 z-10 text-xs" tilt="12deg">
-                  Lead
-                </Stamp>
-              )}
               {c.figure && (
                 <Image
                   src={c.figure.src}
