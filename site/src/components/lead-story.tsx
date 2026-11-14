@@ -28,7 +28,7 @@ export function LeadStory({ project }: { project: Project }) {
       <NumbersBox metrics={project.metrics} />
       <SmartLink
         href={`/work/${project.slug}`}
-        className="mt-4 inline-block font-label text-sm font-semibold uppercase tracking-widest text-accent underline underline-offset-4"
+        className="mt-2 inline-block py-2 font-label text-sm font-semibold uppercase tracking-widest text-accent underline underline-offset-4"
       >
         Continued on A3
         <span className="sr-only">: {project.title}</span>

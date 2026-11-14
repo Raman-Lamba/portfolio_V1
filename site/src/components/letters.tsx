@@ -32,7 +32,7 @@ export function Letters() {
             <a
               key={s.id}
               href={mailto(s.subject)}
-              className={`inline-block border-2 border-ink px-4 py-2 font-label text-sm uppercase tracking-widest transition duration-100 active:scale-[0.97] hover:border-accent hover:bg-accent hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${i === 0 ? 'border-burnt bg-burnt text-paper' : ''}`}
+              className={`inline-block border-2 border-ink px-4 py-3 font-label text-sm uppercase tracking-widest transition duration-100 active:scale-[0.97] hover:border-accent hover:bg-accent hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${i === 0 ? 'border-burnt bg-burnt text-paper' : ''}`}
             >
               {s.label}
             </a>
@@ -45,14 +45,14 @@ export function Letters() {
           </a>
         </p>
       </div>
-      <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-1 font-label text-sm uppercase tracking-widest">
+      <ul className="mt-1 flex flex-wrap gap-x-6 font-label text-sm uppercase tracking-widest">
         <li>
-          <a href={site.linkedin} className={link} target="_blank" rel="noopener noreferrer">
+          <a href={site.linkedin} className={`${link} inline-block py-2`} target="_blank" rel="noopener noreferrer">
             LinkedIn
           </a>
         </li>
         <li>
-          <a href={site.github} className={link} target="_blank" rel="noopener noreferrer">
+          <a href={site.github} className={`${link} inline-block py-2`} target="_blank" rel="noopener noreferrer">
             GitHub
           </a>
         </li>

@@ -50,10 +50,10 @@ export function FrontPage() {
                   <StoryCard key={s.slug} project={s} />
                 ))}
               </div>
-              <p className="border-t-2 border-ink pt-2 text-right">
+              <p className="border-t-2 border-ink text-right">
                 <a
                   href="#files"
-                  className="font-label text-sm font-semibold uppercase tracking-widest text-accent underline underline-offset-4"
+                  className="inline-block py-2 font-label text-sm font-semibold uppercase tracking-widest text-accent underline underline-offset-4"
                 >
                   See all work in the archive<span aria-hidden="true"> →</span>
                 </a>

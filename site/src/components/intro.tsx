@@ -4,7 +4,7 @@ import { site } from '@/content/site';
 import { SmartLink } from './smart-link';
 
 const cta =
-  'inline-block border-2 border-ink px-4 py-2 font-label text-sm uppercase tracking-widest transition duration-100 active:scale-[0.97] hover:border-accent hover:bg-accent hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent';
+  'inline-block border-2 border-ink px-4 py-3 font-label text-sm uppercase tracking-widest transition duration-100 active:scale-[0.97] hover:border-accent hover:bg-accent hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent';
 
 export function Intro() {
   return (
