@@ -23,7 +23,7 @@ export function ProjectArticle({
       </p>
       <h1 className="mt-1 font-display text-5xl font-bold leading-[1.02] sm:text-6xl">{project.title}</h1>
       <p className="mt-2 font-body text-lg italic">{project.credit}</p>
-      {figures.length === 0 && <HalftonePlate caption={`${project.title}, ${project.year}`} />}
+      {figures.length === 0 && <HalftonePlate slug={project.slug} caption={`${project.title}, ${project.year}`} />}
       <p className="mt-4 font-body text-lg leading-relaxed">{project.deck}</p>
       {project.metrics.length > 0 && <h2 className="sr-only">Key figures</h2>}
       <NumbersBox metrics={project.metrics} />

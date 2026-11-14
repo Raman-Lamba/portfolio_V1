@@ -13,7 +13,7 @@ export function LeadStory({ project }: { project: Project }) {
         {project.title}
       </h2>
       <p className="mt-2 font-body text-lg italic">{project.credit}</p>
-      <HalftonePlate caption={`${project.title}, ${project.year}`} />
+      <HalftonePlate slug={project.slug} caption={`${project.title}, ${project.year}`} />
       <p className="mt-4 font-body text-lg leading-relaxed first-letter:float-left first-letter:pr-2 first-letter:font-display first-letter:text-6xl first-letter:font-black first-letter:leading-[0.8]">
         {project.deck}
       </p>

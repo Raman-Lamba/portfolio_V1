@@ -9,7 +9,7 @@ const cta =
 export function Intro() {
   return (
     <section id="intro" aria-labelledby="intro-heading" className="mt-6 border-b-2 border-ink pb-6">
-      <div className="grid gap-6 md:grid-cols-[10rem_1fr]">
+      <div className="grid gap-6 md:grid-cols-[10rem_1fr] md:grid-rows-[auto_1fr] md:gap-x-6 md:gap-y-4">
         <Image
           src={site.photo}
           alt={`Portrait of ${site.name}`}
@@ -17,8 +17,11 @@ export function Intro() {
           height={845}
           className="h-auto w-32 border border-ink grayscale contrast-125 md:w-40"
         />
-        <div>
-          <h2 id="intro-heading" className="font-display text-4xl font-bold leading-[1.05] sm:text-5xl lg:text-6xl">
+        <div className="@container md:col-start-2 md:row-span-2 md:row-start-1">
+          <h2
+            id="intro-heading"
+            className="whitespace-nowrap font-display text-[clamp(1.1rem,5.4cqw,4rem)] font-bold leading-[1.05]"
+          >
             {about.headline}
           </h2>
           <div className="mt-4 font-body text-lg leading-[1.45] md:columns-2 md:gap-8 md:[column-rule:1px_solid_var(--color-ink)]">
@@ -31,14 +34,14 @@ export function Intro() {
           <blockquote className="mt-5 border-l-4 border-accent pl-3 font-display text-2xl italic">
             {about.pullQuote}
           </blockquote>
-          <div className="mt-4 flex flex-wrap gap-3">
-            <SmartLink href="#contact" className={`${cta} bg-ink text-paper`}>
-              Hire me
-            </SmartLink>
-            <SmartLink href="/resume" className={cta}>
-              Résumé
-            </SmartLink>
-          </div>
+        </div>
+        <div className="flex flex-wrap gap-3 md:col-start-1 md:row-start-2 md:flex-col md:items-stretch md:self-start">
+          <SmartLink href="#contact" className={`${cta} bg-ink text-paper text-center`}>
+            Hire me
+          </SmartLink>
+          <SmartLink href="/resume" className={`${cta} text-center`}>
+            Résumé
+          </SmartLink>
         </div>
       </div>
     </section>

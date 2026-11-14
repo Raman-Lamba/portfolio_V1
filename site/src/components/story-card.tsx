@@ -1,10 +1,12 @@
 import type { Project } from '@/content/types';
+import { HalftonePlate } from './halftone-plate';
 import { SmartLink } from './smart-link';
 
 export function StoryCard({ project }: { project: Project }) {
   return (
     <article className="py-4 md:px-4 md:first:pl-0 md:last:pr-0">
-      <p className="font-label text-xs font-semibold uppercase tracking-[0.25em] text-accent">
+      <HalftonePlate slug={project.slug} />
+      <p className="mt-3 font-label text-xs font-semibold uppercase tracking-[0.25em] text-accent">
         {project.kicker}
       </p>
       <h3 className="mt-1 font-display text-3xl font-bold leading-[1.1]">

@@ -25,6 +25,11 @@ describe('parseHeadline', () => {
       url: 'https://news.google.com/rss/articles/abc',
     });
   });
+  it('prefers the newest item by publish date', () => {
+    const two = `<item><title>Old story - A</title><link>https://a.test/1</link><pubDate>Fri, 13 Nov 2026 01:00:00 GMT</pubDate></item>
+      <item><title>New story - B</title><link>https://a.test/2</link><pubDate>Sat, 14 Nov 2026 05:00:00 GMT</pubDate></item>`;
+    expect(parseHeadline(two)?.url).toBe('https://a.test/2');
+  });
   it('returns null without an item or with a non-http link', () => {
     expect(parseHeadline('<rss></rss>')).toBeNull();
     expect(parseHeadline('<item><title>a</title><link>javascript:x</link></item>')).toBeNull();

@@ -18,9 +18,11 @@ export function parseQuote(label: string, json: unknown): Quote | null {
   return { label, price, changePct: ((price - prev) / prev) * 100 };
 }
 
-// Pure: first usable <item> of a Google News RSS feed. Google appends " - Source" to titles.
+// Pure: the newest usable <item> of a Google News RSS feed. Google appends " - Source" to titles.
 export function parseHeadline(xml: string): Headline | null {
-  const item = /<item>([\s\S]*?)<\/item>/.exec(xml)?.[1];
+  const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].map((m) => m[1]);
+  const stamp = (it: string) => Date.parse(/<pubDate>([^<]*)<\/pubDate>/.exec(it)?.[1] ?? '') || 0;
+  const item = items.sort((a, b) => stamp(b) - stamp(a))[0];
   if (!item) return null;
   const pick = (tag: string) =>
     new RegExp(`<${tag}[^>]*>(?:<!\\[CDATA\\[)?([\\s\\S]*?)(?:\\]\\]>)?</${tag}>`).exec(item)?.[1]?.trim();
@@ -56,6 +58,6 @@ export async function fetchQuotes(): Promise<Quote[]> {
 }
 
 export async function fetchHeadline(): Promise<Headline | null> {
-  const res = await get('https://news.google.com/rss/search?q=fintech+when:1d&hl=en-IN&gl=IN&ceid=IN:en');
+  const res = await get('https://news.google.com/rss/search?q=stock+market+Sensex+Nifty+when:1d&hl=en-IN&gl=IN&ceid=IN:en');
   return res ? parseHeadline(await res.text()) : null;
 }
