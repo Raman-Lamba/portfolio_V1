@@ -40,14 +40,18 @@ export function Wire({ headline }: { headline: Headline | null }) {
   );
 }
 
-export async function LiveStrip() {
+export async function LiveMarkets() {
   'use cache';
   cacheLife('hours');
-  const [quotes, headline] = await Promise.all([fetchQuotes(), fetchHeadline()]);
   return (
-    <div className="mt-4 space-y-3">
-      <MarketsStrip quotes={quotes} />
-      <Wire headline={headline} />
+    <div className="mt-4">
+      <MarketsStrip quotes={await fetchQuotes()} />
     </div>
   );
+}
+
+export async function LiveWire() {
+  'use cache';
+  cacheLife('hours');
+  return <Wire headline={await fetchHeadline()} />;
 }

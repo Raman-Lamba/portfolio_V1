@@ -9,7 +9,7 @@ export function LeadStory({ project }: { project: Project }) {
       <p className="font-label text-sm font-semibold uppercase tracking-[0.25em] text-accent">
         {project.kicker}
       </p>
-      <h2 className="mt-1 font-display text-4xl font-black leading-[1.05] sm:text-5xl">
+      <h2 className="mt-1 font-display text-5xl font-bold leading-[1.02] sm:text-6xl lg:text-7xl">
         {project.title}
       </h2>
       <p className="mt-2 font-body text-lg italic">{project.credit}</p>

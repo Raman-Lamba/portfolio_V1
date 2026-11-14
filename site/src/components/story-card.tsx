@@ -7,7 +7,7 @@ export function StoryCard({ project }: { project: Project }) {
       <p className="font-label text-xs font-semibold uppercase tracking-[0.25em] text-accent">
         {project.kicker}
       </p>
-      <h3 className="mt-1 font-display text-2xl font-bold leading-tight">
+      <h3 className="mt-1 font-display text-3xl font-bold leading-[1.1]">
         <SmartLink href={`/work/${project.slug}`} className="hover:underline">
           {project.title}
         </SmartLink>

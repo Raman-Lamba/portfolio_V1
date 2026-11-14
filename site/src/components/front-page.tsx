@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { getAd, getLead, getStories } from '@/content/queries';
-import { LiveStrip } from './live-strip';
+import { LiveMarkets, LiveWire } from './live-strip';
 import { Ad } from './ad';
 import { Bureaus } from './bureaus';
 import { CaseFiles } from './case-files';
@@ -20,12 +20,17 @@ export function FrontPage() {
       <main id="main" className="mx-auto max-w-6xl px-4 py-6">
         <IndexBox />
         <Suspense fallback={null}>
-          <LiveStrip />
+          <LiveMarkets />
         </Suspense>
         <Intro />
         <div className="mt-6 grid gap-6 lg:grid-cols-[2fr_1fr]">
           <LeadStory project={lead} />
-          <Ad ad={getAd('wanted')} layout="tall" />
+          <div className="space-y-4">
+            <Ad ad={getAd('wanted')} layout="tall" />
+            <Suspense fallback={null}>
+              <LiveWire />
+            </Suspense>
+          </div>
         </div>
         <section aria-labelledby="stories-heading" className="mt-6">
           <h2 id="stories-heading" className="sr-only">

@@ -18,17 +18,17 @@ export function Intro() {
           className="h-auto w-32 border border-ink grayscale contrast-125 md:w-40"
         />
         <div>
-          <h2 id="intro-heading" className="font-display text-3xl font-bold italic leading-tight sm:text-4xl">
+          <h2 id="intro-heading" className="font-display text-4xl font-bold leading-[1.05] sm:text-5xl lg:text-6xl">
             {about.headline}
           </h2>
-          <div className="mt-3 font-body md:columns-2 md:gap-6">
+          <div className="mt-4 font-body text-lg leading-[1.45] md:columns-2 md:gap-8 md:[column-rule:1px_solid_var(--color-ink)]">
             {about.paragraphs.map((p) => (
-              <p key={p} className="mb-2 break-inside-avoid">
+              <p key={p} className="hyphens-auto text-justify [&:not(:first-child)]:indent-5">
                 {p}
               </p>
             ))}
           </div>
-          <blockquote className="mt-3 border-l-4 border-accent pl-3 font-display text-lg italic">
+          <blockquote className="mt-5 border-l-4 border-accent pl-3 font-display text-2xl italic">
             {about.pullQuote}
           </blockquote>
           <div className="mt-4 flex flex-wrap gap-3">

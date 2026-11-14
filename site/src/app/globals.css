@@ -4,8 +4,9 @@
   --color-paper: #efe6d0;
   --color-ink: #1b1612;
   --color-accent: #8b1e1e;
-  --font-display: var(--font-playfair), Georgia, serif;
-  --font-body: var(--font-source), Georgia, serif;
+  --font-display: var(--font-standard), Georgia, serif;
+  --font-masthead: var(--font-fraktur), Georgia, serif;
+  --font-body: var(--font-news), Georgia, serif;
   --font-label: var(--font-barlow), "Arial Narrow", sans-serif;
   --font-mono: var(--font-plex), ui-monospace, monospace;
 }

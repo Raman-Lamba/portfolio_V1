@@ -4,8 +4,10 @@ export function HalftonePlate({ caption }: { caption: string }) {
     <figure className="mt-4">
       <div
         aria-hidden="true"
-        className="h-48 w-full border border-ink bg-ink/15 text-ink sm:h-64"
+        className="h-40 w-full border border-ink bg-ink/10 text-ink sm:h-52"
         style={{
+          maskImage: 'linear-gradient(115deg, black 15%, rgba(0,0,0,0.25) 85%)',
+          WebkitMaskImage: 'linear-gradient(115deg, black 15%, rgba(0,0,0,0.25) 85%)',
           backgroundImage:
             'radial-gradient(circle, currentColor 22%, transparent 24%), radial-gradient(circle, currentColor 10%, transparent 12%)',
           backgroundSize: '9px 9px, 4px 4px',

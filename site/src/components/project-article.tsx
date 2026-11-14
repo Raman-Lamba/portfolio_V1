@@ -21,7 +21,7 @@ export function ProjectArticle({
       <p className="font-label text-sm font-semibold uppercase tracking-[0.25em] text-accent">
         {project.kicker}
       </p>
-      <h1 className="mt-1 font-display text-4xl font-black leading-[1.05] sm:text-5xl">{project.title}</h1>
+      <h1 className="mt-1 font-display text-5xl font-bold leading-[1.02] sm:text-6xl">{project.title}</h1>
       <p className="mt-2 font-body text-lg italic">{project.credit}</p>
       {figures.length === 0 && <HalftonePlate caption={`${project.title}, ${project.year}`} />}
       <p className="mt-4 font-body text-lg leading-relaxed">{project.deck}</p>

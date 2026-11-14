@@ -12,7 +12,7 @@ export function Masthead({ now }: { now?: Date }) {
           <span className="block">{site.volume}</span>
         </p>
       </div>
-      <h1 className="mt-2 text-center font-display text-5xl font-black tracking-tight sm:text-7xl">
+      <h1 className="mt-2 text-center font-masthead text-6xl sm:text-8xl">
         {site.name}
       </h1>
       <p className="mt-1 text-center font-label text-sm uppercase tracking-[0.3em]">{site.tagline}</p>
