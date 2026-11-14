@@ -74,6 +74,9 @@ export const projects: Project[] = [
     sections: ['finance'],
     credit: 'Solo project',
     year: 2026,
+    downloads: [
+      { label: 'Download the valuation workbook', href: '/downloads/asian-paints-valuation.xlsx', note: 'Excel, 125 KB' },
+    ],
     metrics: [
       { value: '13.7%', label: 'WACC' },
       { value: 'Rs 586', label: 'intrinsic value vs ~Rs 2,580 CMP' },
@@ -87,6 +90,9 @@ export const projects: Project[] = [
     sections: ['finance'],
     credit: 'Team submission · Relative valuation',
     year: 2026,
+    downloads: [
+      { label: 'Download the research report', href: '/downloads/apl-apollo-cfa-research-report.pdf', note: 'PDF, 1.7 MB, team submission' },
+    ],
     metrics: [{ value: '16', label: 'page report' }],
   },
   {
@@ -120,7 +126,7 @@ export const projects: Project[] = [
     sections: ['ml-ai', 'web'],
     credit: 'Solo project',
     year: 2025,
-    source: 'https://github.com/Raman-Lamba/MindBloom-Final',
+    source: 'https://github.com/Raman-Lamba/MindBloom-Final/tree/master',
     metrics: [{ value: 'RAG', label: 'answers retrieved from the book' }],
   },
   {

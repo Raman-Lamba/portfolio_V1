@@ -22,6 +22,8 @@ export type Project = {
   link?: { label: string; href: string };
   /** Public GitHub repository, only when the repo is public. */
   source?: string;
+  /** Files served from /public/downloads. */
+  downloads?: { label: string; href: string; note: string }[];
 };
 
 export type Bureau = { id: string; org: string; role: string; dates: string; summary: string };

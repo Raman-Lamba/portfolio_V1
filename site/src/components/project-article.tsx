@@ -63,8 +63,21 @@ export function ProjectArticle({
           ))}
         </>
       )}
+      {project.downloads && (
+        <ul className="mt-8 space-y-1 font-label text-sm font-semibold uppercase tracking-widest">
+          {project.downloads.map((d) => (
+            <li key={d.href}>
+              <a href={d.href} download className="text-accent underline underline-offset-4">
+                {d.label}
+                <span aria-hidden="true"> ↓</span>
+              </a>
+              <span className="ml-2 font-mono text-xs font-normal normal-case tracking-normal text-ink/70">({d.note})</span>
+            </li>
+          ))}
+        </ul>
+      )}
       {(project.link || project.source) && (
-        <p className="mt-8 flex flex-wrap gap-x-6 gap-y-2 font-label text-sm font-semibold uppercase tracking-widest">
+        <p className="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-label text-sm font-semibold uppercase tracking-widest">
           {project.link && (
             <a
               href={project.link.href}

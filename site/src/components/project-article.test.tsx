@@ -61,4 +61,11 @@ describe('ProjectArticle', () => {
     render(<ProjectArticle project={getProject('asian-paints-valuation')!} />);
     expect(screen.queryByRole('link', { name: /Source code/ })).toBeNull();
   });
+
+  it('offers downloadable files where a project has them', () => {
+    render(<ProjectArticle project={getProject('asian-paints-valuation')!} />);
+    const link = screen.getByRole('link', { name: /Download the valuation workbook/ });
+    expect(link).toHaveAttribute('href', '/downloads/asian-paints-valuation.xlsx');
+    expect(link).toHaveAttribute('download');
+  });
 });
