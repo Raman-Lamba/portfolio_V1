@@ -28,6 +28,17 @@ export const projectDetails: Record<string, ProjectDetails> = {
     result:
       'A single-player learning game: ten rounds per playthrough, realized P&L for every strategy each round, your pick ranked against the rest, and a shared leaderboard.',
     stack: ['Python', 'Supabase', 'Next.js'],
+    product: {
+      user: 'Students and new traders who know the payoff diagrams but have never watched a strategy play out through a real expiry.',
+      decisions: [
+        'Real NSE data over simulated prices. Simulated paths are easier to build, but a result teaches more when it actually happened.',
+        'Score all ten strategies every round, not only the one picked. The lesson is in the comparison: you see what you gave up.',
+        'Scenarios spread across market regimes, so a playthrough is not ten rounds of the same market.',
+        'Ten rounds and a shared leaderboard: short enough to finish in one sitting, with a reason to come back.',
+      ],
+      measure:
+        "Completion: the share of players who finish all ten rounds. Learning: whether a returning player's pick ranks higher among the ten strategies than it did on their first playthrough.",
+    },
   },
   'trade-simulator': {
     problem: 'Estimate the cost of a trade before placing it, in real time.',

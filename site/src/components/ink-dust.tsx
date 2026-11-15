@@ -2,23 +2,19 @@
 import { useEffect, useRef } from 'react';
 import { dustOpacity, exitProgress, gridFor, placeDot, sampleDots, sourceOpacity, type Dot } from '@/lib/ink-dust';
 
-type Source = 'image' | 'text';
-
 /**
- * Wraps one element (an <img>, or a single line of text) and, as it scrolls off the top of the
+ * Wraps a single line of text and, as it scrolls off the top of the
  * page, lets its ink loosen into halftone dots that drift right like dust off a printed sheet.
  * The real element stays in the DOM for crawlers and screen readers; the canvas is a visual layer
  * that is only redrawn while the visitor scrolls. Reduced-motion readers, and browsers where the
  * canvas cannot be set up, simply see the static page.
  */
 export function InkDust({
-  source,
   maxDots = [1600, 3200],
   reach = 3,
   className,
   children,
 }: {
-  source: Source;
   /** dot cap on [phones, larger screens] */
   maxDots?: [number, number];
   /** how far the dust may travel, in widths of the element */
@@ -44,7 +40,6 @@ export function InkDust({
 
     const small = window.matchMedia('(max-width: 767px)').matches;
     const cap = small ? capSmall : capLarge;
-    // read ink from the wrapper, not the target: next/image sets `color: transparent` on its <img>
     const ink = getComputedStyle(host).color || '#1b1612';
     const accent = getComputedStyle(document.documentElement).getPropertyValue('--color-accent').trim() || '#8b1e1e';
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -74,38 +69,27 @@ export function InkDust({
       const octx = off.getContext('2d');
       if (!octx) return;
       octx.imageSmoothingQuality = 'high';
-      if (source === 'image') {
-        const img = target as HTMLImageElement;
-        try {
-          await img.decode();
-        } catch {
-          return; // the static picture stays
-        }
-        if (!alive) return;
-        octx.drawImage(img, 0, 0, cols, rows);
-      } else {
-        await document.fonts.ready;
-        if (!alive) return;
-        const cs = getComputedStyle(target);
-        const full = document.createElement('canvas');
-        full.width = w;
-        full.height = h;
-        const fctx = full.getContext('2d');
-        if (!fctx) return;
-        fctx.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
-        if ('letterSpacing' in fctx) fctx.letterSpacing = cs.letterSpacing === 'normal' ? '0px' : cs.letterSpacing;
-        fctx.textBaseline = 'alphabetic';
-        fctx.textAlign = cs.textAlign === 'center' ? 'center' : 'left';
-        const text = target.textContent ?? '';
-        const m = fctx.measureText(text);
-        const size = parseFloat(cs.fontSize);
-        const asc = m.fontBoundingBoxAscent || size * 0.8;
-        const desc = m.fontBoundingBoxDescent || size * 0.2;
-        const line = parseFloat(cs.lineHeight) || h;
-        fctx.fillStyle = '#000';
-        fctx.fillText(text, fctx.textAlign === 'center' ? w / 2 : 0, (h - line) / 2 + (line - asc - desc) / 2 + asc);
-        octx.drawImage(full, 0, 0, cols, rows);
-      }
+      await document.fonts.ready;
+      if (!alive) return;
+      const cs = getComputedStyle(target);
+      const full = document.createElement('canvas');
+      full.width = w;
+      full.height = h;
+      const fctx = full.getContext('2d');
+      if (!fctx) return;
+      fctx.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+      if ('letterSpacing' in fctx) fctx.letterSpacing = cs.letterSpacing === 'normal' ? '0px' : cs.letterSpacing;
+      fctx.textBaseline = 'alphabetic';
+      fctx.textAlign = cs.textAlign === 'center' ? 'center' : 'left';
+      const text = target.textContent ?? '';
+      const m = fctx.measureText(text);
+      const size = parseFloat(cs.fontSize);
+      const asc = m.fontBoundingBoxAscent || size * 0.8;
+      const desc = m.fontBoundingBoxDescent || size * 0.2;
+      const line = parseFloat(cs.lineHeight) || h;
+      fctx.fillStyle = '#000';
+      fctx.fillText(text, fctx.textAlign === 'center' ? w / 2 : 0, (h - line) / 2 + (line - asc - desc) / 2 + asc);
+      octx.drawImage(full, 0, 0, cols, rows);
       dots = sampleDots(octx.getImageData(0, 0, cols, rows).data, cols, rows, cap);
       sampledFor = key;
       lastP = -1;
@@ -172,7 +156,7 @@ export function InkDust({
     };
     const onResize = () => {
       layout();
-      if (source === 'text') void sample();
+      void sample();
       schedule();
     };
 
@@ -200,7 +184,7 @@ export function InkDust({
       target.style.opacity = '';
       canvas.remove();
     };
-  }, [source, capSmall, capLarge, reach]);
+  }, [capSmall, capLarge, reach]);
 
   return (
     <div ref={wrap} className={className ? `relative ${className}` : 'relative'}>

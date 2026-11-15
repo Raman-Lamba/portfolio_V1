@@ -12,6 +12,11 @@ describe('project details', () => {
       expect(d.approach.length).toBeGreaterThan(0);
       expect(d.result.length).toBeGreaterThan(0);
       expect(d.stack.length).toBeGreaterThan(0);
+      if (d.product) {
+        expect(d.product.user.length).toBeGreaterThan(0);
+        expect(d.product.decisions.length).toBeGreaterThan(0);
+        expect(d.product.measure.length).toBeGreaterThan(0);
+      }
     }
   });
   it('covers the lead and the front-page stories', () => {

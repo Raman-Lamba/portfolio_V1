@@ -18,7 +18,7 @@ export function Masthead({ now }: { now?: Date }) {
       </div>
       {/* fluid below 390px so the nameplate stays on one line on small phones; the set type
           scatters into ink dust as the masthead scrolls off the top */}
-      <InkDust source="text" maxDots={[1000, 2400]} reach={1.5}>
+      <InkDust maxDots={[1000, 2400]} reach={1.5}>
         <h1 className="masthead-plate mt-2 whitespace-nowrap text-center font-masthead text-[clamp(2.5rem,15.5vw,3.75rem)] sm:text-8xl">
           {site.name}
         </h1>

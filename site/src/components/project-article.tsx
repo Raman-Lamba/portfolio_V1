@@ -31,10 +31,28 @@ export function ProjectArticle({
         <>
           <h2 className={sectionHeading}>The problem</h2>
           <p className={paragraph}>{details.problem}</p>
+          {details.product && (
+            <>
+              <h2 className={sectionHeading}>Who it is for</h2>
+              <p className={paragraph}>{details.product.user}</p>
+              <h2 className={sectionHeading}>Decisions and trade-offs</h2>
+              <ul className="mt-3 list-disc space-y-2 pl-5 font-body text-lg leading-relaxed">
+                {details.product.decisions.map((d) => (
+                  <li key={d}>{d}</li>
+                ))}
+              </ul>
+            </>
+          )}
           <h2 className={sectionHeading}>The approach</h2>
           <p className={paragraph}>{details.approach}</p>
           <h2 className={sectionHeading}>The result</h2>
           <p className={paragraph}>{details.result}</p>
+          {details.product && (
+            <>
+              <h2 className={sectionHeading}>How I would measure it</h2>
+              <p className={paragraph}>{details.product.measure}</p>
+            </>
+          )}
           <h2 className={sectionHeading}>Built with</h2>
           <ul className="mt-3 flex flex-wrap gap-2 font-mono text-sm">
             {details.stack.map((s) => (
