@@ -35,7 +35,10 @@ describe('ink dust sampling', () => {
     );
     expect(dots).toHaveLength(50);
     expect(dots.every((d) => d.x < 0.5)).toBe(true);
-    expect(dots.every((d) => d.k > 0.85 && d.r > 0 && d.s >= 0 && d.s < 1)).toBe(true);
+    expect(dots.every((d) => d.k > 0.85 && d.k <= 1 && d.r > 0 && d.s >= 0 && d.s < 1)).toBe(true);
+    // midtones are lifted so an averaged halftone cell still holds visible ink
+    const grey = sampleDots(pixels(1, 1, () => [128, 128, 128, 255]), 1, 1, 10)[0];
+    expect(grey.k).toBeGreaterThan(0.6);
 
     const capped = sampleDots(pixels(10, 10, () => [0, 0, 0, 255]), 10, 10, 30);
     expect(capped).toHaveLength(30);
@@ -61,8 +64,10 @@ describe('scroll progress', () => {
   it('crossfades the real element out as the dots come in, with nothing shown at rest', () => {
     expect(sourceOpacity(0)).toBe(1);
     expect(dustOpacity(0)).toBe(0);
-    expect(sourceOpacity(0.2)).toBe(0);
-    expect(dustOpacity(0.2)).toBe(1);
+    expect(sourceOpacity(0.2)).toBeGreaterThan(0);
+    expect(sourceOpacity(0.2)).toBeLessThan(1);
+    expect(sourceOpacity(0.4)).toBe(0);
+    expect(dustOpacity(0.3)).toBe(1);
   });
 });
 

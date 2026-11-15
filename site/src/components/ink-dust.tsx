@@ -44,7 +44,8 @@ export function InkDust({
 
     const small = window.matchMedia('(max-width: 767px)').matches;
     const cap = small ? capSmall : capLarge;
-    const ink = getComputedStyle(target).color || '#1b1612';
+    // read ink from the wrapper, not the target: next/image sets `color: transparent` on its <img>
+    const ink = getComputedStyle(host).color || '#1b1612';
     const accent = getComputedStyle(document.documentElement).getPropertyValue('--color-accent').trim() || '#8b1e1e';
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
 

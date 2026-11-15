@@ -60,13 +60,16 @@ export function sampleDots(
     for (let i = 0; i < cols; i++) {
       const o = (j * cols + i) * 4;
       const lum = (0.299 * rgba[o] + 0.587 * rgba[o + 1] + 0.114 * rgba[o + 2]) / 255;
-      const k = (1 - lum) * (rgba[o + 3] / 255);
-      if (k < threshold) continue;
+      const raw = (1 - lum) * (rgba[o + 3] / 255);
+      if (raw < threshold) continue;
+      // a cell averages a halftone's dots with the paper between them, so lift the midtones or the
+      // face comes out far fainter than the hair and jacket
+      const k = Math.pow(raw, 0.55);
       const s = hashSeed(j * cols + i);
       dots.push({
         x: (i + 0.5) * cellW,
         y: (j + 0.5) / rows,
-        r: cellW * 0.5 * (0.5 + 0.65 * k),
+        r: cellW * 0.5 * (0.45 + 0.7 * k),
         k,
         s,
       });
@@ -85,11 +88,11 @@ export function exitProgress(scrollY: number, docTop: number, height: number) {
   return range <= 0 ? 1 : clamp01(scrollY / range);
 }
 
-/** Opacity of the real element underneath: it fades out as the first dots begin to loosen. */
-export const sourceOpacity = (p: number) => 1 - smoothstep(p, 0.02, 0.16);
+/** Opacity of the real element underneath: it gives way gradually as the dots begin to loosen. */
+export const sourceOpacity = (p: number) => 1 - smoothstep(p, 0.08, 0.38);
 
-/** How strongly the dot layer shows: it fades in a touch ahead of the source fading out. */
-export const dustOpacity = (p: number) => smoothstep(p, 0, 0.1);
+/** How strongly the dot layer shows: it comes in a touch ahead of the source fading out. */
+export const dustOpacity = (p: number) => smoothstep(p, 0.04, 0.3);
 
 /**
  * Where a dot sits at progress `p` inside a box of boxW x boxH CSS pixels. Dots on the right edge
