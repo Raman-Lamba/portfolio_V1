@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import { about } from '@/content/about';
 import { site } from '@/content/site';
-import { InkDust } from './ink-dust';
 import { SmartLink } from './smart-link';
 
 const cta =
@@ -12,18 +11,15 @@ export function Intro() {
     <section id="intro" aria-labelledby="intro-heading" className="mt-6 border-b-2 border-ink pb-6">
       <div className="grid gap-6 md:grid-cols-[12rem_1fr] md:gap-x-8">
         <figure>
-          {/* the halftone portrait loosens into ink dust as it scrolls off the top of the page */}
-          <InkDust source="image" className="w-36 md:w-full">
-            <Image
-              src={site.portrait.src}
-              alt={`Portrait of ${site.name}`}
-              width={site.portrait.width}
-              height={site.portrait.height}
-              sizes="(min-width: 768px) 12rem, 9rem"
-              priority
-              className="h-auto w-full border border-ink bg-paper"
-            />
-          </InkDust>
+          <Image
+            src={site.portrait.src}
+            alt={`Portrait of ${site.name}`}
+            width={site.portrait.width}
+            height={site.portrait.height}
+            sizes="(min-width: 768px) 12rem, 9rem"
+            priority
+            className="h-auto w-36 border border-ink bg-paper md:w-full"
+          />
           <figcaption className="mt-1 border-b border-ink pb-1 font-body text-xs italic">
             {site.name}, MBA (Finance) candidate at IMT Hyderabad.
           </figcaption>
