@@ -1,5 +1,6 @@
 import { site } from '@/content/site';
 import { Dateline } from './dateline';
+import { InkDust } from './ink-dust';
 
 export function Masthead({ now }: { now?: Date }) {
   return (
@@ -15,10 +16,13 @@ export function Masthead({ now }: { now?: Date }) {
           <span className="block">{site.volume}</span>
         </p>
       </div>
-      {/* fluid below 390px so the nameplate stays on one line on small phones */}
-      <h1 className="masthead-plate mt-2 whitespace-nowrap text-center font-masthead text-[clamp(2.5rem,15.5vw,3.75rem)] sm:text-8xl">
-        {site.name}
-      </h1>
+      {/* fluid below 390px so the nameplate stays on one line on small phones; the set type
+          scatters into ink dust as the masthead scrolls off the top */}
+      <InkDust source="text" maxDots={[1000, 2400]} reach={1.5}>
+        <h1 className="masthead-plate mt-2 whitespace-nowrap text-center font-masthead text-[clamp(2.5rem,15.5vw,3.75rem)] sm:text-8xl">
+          {site.name}
+        </h1>
+      </InkDust>
       <p className="masthead-tagline mt-1 text-center font-label text-sm uppercase tracking-[0.3em]">
         {site.tagline}
       </p>
