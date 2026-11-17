@@ -16,3 +16,5 @@ resume/RamanLamba_Resume.pdf
 desktop.ini
 .DS_Store
 *.log
+# tailored resumes for job applications: keep local, only the site resume is published
+resume/private/
