@@ -1,4 +1,16 @@
-export type Quote = { label: string; price: number; changePct: number; time?: number; open?: boolean };
+// `open` is only true at fetch time; cached copies outlive it, so `session` (ms) carries the
+// window itself and the page re-checks it against the viewer's clock.
+export type Quote = {
+  label: string;
+  price: number;
+  changePct: number;
+  time?: number;
+  open?: boolean;
+  session?: { start: number; end: number };
+};
+
+export const isOpen = (q: Quote, now = Date.now()) =>
+  q.session ? now >= q.session.start && now <= q.session.end : q.open === true;
 export type Headline = { title: string; summary: string; source: string; url: string };
 export type Region = 'India' | 'US';
 export type MarketReport = Record<Region, Quote[]>;
@@ -51,15 +63,15 @@ export function parseQuote(label: string, json: unknown, now = Date.now()): Quot
   }
   const period = meta?.currentTradingPeriod?.regular;
   const time = meta?.regularMarketTime ? meta.regularMarketTime * 1000 : undefined;
-  const open = period?.start && period?.end ? now >= period.start * 1000 && now <= period.end * 1000 : undefined;
-  return { label, price, changePct, time, open };
+  const session = period?.start && period?.end ? { start: period.start * 1000, end: period.end * 1000 } : undefined;
+  const open = session ? now >= session.start && now <= session.end : undefined;
+  return { label, price, changePct, time, open, ...(session && { session }) };
 }
 
 // Pure: one plain sentence from the numbers (fixed rules, no generated text).
-export function summarise(region: Region, rows: Quote[]): string {
+export function summarise(region: Region, rows: Quote[], open = rows[0]?.open === true): string {
   const [lead, , , vix] = rows;
   if (!lead) return '';
-  const open = lead.open === true;
   const flat = Math.abs(lead.changePct) < 0.15;
   const dir = lead.changePct > 0 ? 'higher' : 'lower';
   const name = region === 'India' ? 'Indian equities' : 'US equities';

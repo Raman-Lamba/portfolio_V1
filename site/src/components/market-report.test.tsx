@@ -32,6 +32,13 @@ describe('MarketReportView', () => {
     expect(screen.getByText(/Indian equities ended lower: Nifty 50 -0\.61%/)).toBeInTheDocument();
     expect(screen.getByText(/Delayed, not advice/)).toBeInTheDocument();
   });
+  it('shows open when a cached report says closed but the session is live now', () => {
+    const now = Date.now();
+    const stale = { ...q('Nifty 50', 1, 0.5), session: { start: now - 3600_000, end: now + 3600_000 } };
+    render(<MarketReportView report={{ India: [stale], US: [] }} />);
+    expect(screen.getByText('Market open')).toBeInTheDocument();
+    expect(screen.getByText(/Indian equities are trading higher/)).toBeInTheDocument();
+  });
   it('drops a region without data and hides entirely when both are empty', () => {
     const { rerender, container } = render(<MarketReportView report={{ India: [q('Nifty 50', 1, 1)], US: [] }} />);
     expect(screen.queryByRole('heading', { level: 3, name: 'US' })).toBeNull();

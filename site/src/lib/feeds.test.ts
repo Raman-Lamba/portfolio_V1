@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { newest, parseItems, parseQuote, summarise, type Quote } from './feeds';
+import { isOpen, newest, parseItems, parseQuote, summarise, type Quote } from './feeds';
 
 const chart = (meta: object, close?: (number | null)[]) => ({
   chart: { result: [{ meta, indicators: { quote: [{ close }] } }] },
@@ -18,6 +18,13 @@ describe('parseQuote', () => {
     const meta = { regularMarketPrice: 1, regularMarketChangePercent: 0, currentTradingPeriod: { regular: { start: 100, end: 200 } } };
     expect(parseQuote('x', chart(meta), 150_000)?.open).toBe(true);
     expect(parseQuote('x', chart(meta), 250_000)?.open).toBe(false);
+  });
+  it('keeps the session window so a cached quote can be re-checked later', () => {
+    const meta = { regularMarketPrice: 1, regularMarketChangePercent: 0, currentTradingPeriod: { regular: { start: 100, end: 200 } } };
+    const stale = parseQuote('x', chart(meta), 50_000)!; // fetched before the open
+    expect(stale.open).toBe(false);
+    expect(isOpen(stale, 150_000)).toBe(true);
+    expect(isOpen(stale, 250_000)).toBe(false);
   });
   it('returns null for missing or broken data', () => {
     expect(parseQuote('x', null)).toBeNull();

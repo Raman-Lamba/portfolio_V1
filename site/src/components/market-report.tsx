@@ -1,5 +1,6 @@
 import { cacheLife } from 'next/cache';
-import { fetchMarketReport, summarise, type MarketReport as Report, type Quote, type Region } from '@/lib/feeds';
+import { fetchMarketReport, type MarketReport as Report, type Quote, type Region } from '@/lib/feeds';
+import { MarketBadge, MarketSummary } from './market-status';
 
 const zones: Record<Region, { tz: string; locale: string }> = {
   India: { tz: 'Asia/Kolkata', locale: 'en-IN' },
@@ -45,7 +46,6 @@ function Change({ pct, big }: { pct: number; big?: boolean }) {
 function Table({ region, rows }: { region: Region; rows: Quote[] }) {
   if (rows.length === 0) return null;
   const [lead, ...rest] = rows;
-  const open = lead.open === true;
   const fmt = (n: number) => n.toLocaleString(zones[region].locale, { maximumFractionDigits: 2 });
   return (
     <div className="min-w-0 border-2 border-ink p-4">
@@ -54,11 +54,7 @@ function Table({ region, rows }: { region: Region; rows: Quote[] }) {
           <h3 className="font-display text-3xl font-bold leading-none">{region}</h3>
           <p className="mt-1 font-mono text-xs">As of {asOf(region, lead.time)}</p>
         </div>
-        <p
-          className={`border-2 px-2 py-0.5 font-label text-xs font-semibold uppercase tracking-[0.25em] ${open ? 'border-burnt text-burnt' : 'border-ink'}`}
-        >
-          {open ? 'Market open' : 'Market closed'}
-        </p>
+        <MarketBadge lead={lead} />
       </div>
       <div className="mt-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-1 border-y-2 border-ink py-3">
         <div>
@@ -90,7 +86,7 @@ function Table({ region, rows }: { region: Region; rows: Quote[] }) {
           ))}
         </tbody>
       </table>
-      <p className="mt-3 border-t border-ink pt-2 font-body italic">{summarise(region, rows)}</p>
+      <MarketSummary region={region} rows={rows} />
     </div>
   );
 }
