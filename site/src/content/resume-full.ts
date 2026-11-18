@@ -2,7 +2,7 @@ export type ResumeEntry = { org: string; role: string; dates: string; bullets: s
 
 export const resumeFull = {
   summary:
-    'MBA (Finance) candidate and CS engineer who builds models, simulators and data tools for finance. First place in a finance case competition; winner of Qiskit Fall Fest 2026. Experience in private credit operations, equity valuation, and ML for markets.',
+    'MBA (Finance) candidate and CS engineer who builds AI agents, models and data tools for finance. First place in a finance case competition; winner of Qiskit Fall Fest 2026. Experience in private credit operations, equity valuation, and ML for markets.',
   education: [
     {
       school: 'Institute of Management Technology Hyderabad',
@@ -46,6 +46,14 @@ export const resumeFull = {
   ],
   projects: [
     {
+      org: 'Loan Reconciliation Agent',
+      role: 'Python, Apache Fineract, MCP',
+      dates: 'Nov 2026',
+      bullets: [
+        'AI agent that matches bank payments to loans in Apache Fineract, posts clear ones with a co-lending split and queues unclear ones for a person, with an audit log; 0 wrong of 1,348 auto-postings (synthetic data).',
+      ],
+    },
+    {
       org: 'Quantum Portfolio Optimization (QAOA)',
       role: 'Qiskit, Python',
       dates: '2026',
@@ -75,14 +83,6 @@ export const resumeFull = {
       dates: 'Aug 2026',
       bullets: [
         'Game on real NSE F&O data (2019-2024): computes realized P&L for 10 strategies per scenario, with a regime-stratified scenario pool.',
-      ],
-    },
-    {
-      org: 'Trade Simulator & Deribit OMS',
-      role: 'Python, C++',
-      dates: '2024-25',
-      bullets: [
-        'Real-time slippage model (online SGD), Almgren-Chriss market impact and maker/taker classifier; C++ order management client for Deribit testnet with a live order-book WebSocket server.',
       ],
     },
   ] satisfies ResumeEntry[],
