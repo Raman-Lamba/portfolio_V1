@@ -14,4 +14,11 @@ describe('StoryCard', () => {
     expect(screen.getByText(story.credit)).toBeInTheDocument();
     expect(screen.getByText(story.deck)).toBeInTheDocument();
   });
+  it('stamps a winning project and leaves the others plain', () => {
+    const [qiskit, gold] = getStories();
+    const { container, rerender } = render(<StoryCard project={qiskit} />);
+    expect(container.querySelector('.stamp')).toHaveTextContent('Winner');
+    rerender(<StoryCard project={gold} />);
+    expect(container.querySelector('.stamp')).toBeNull();
+  });
 });

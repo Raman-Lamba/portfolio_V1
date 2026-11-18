@@ -1,11 +1,12 @@
 import type { Project } from '@/content/types';
+import { isWinner } from '@/content/queries';
 import { HalftonePlate } from './halftone-plate';
 import { NumbersBox } from './numbers-box';
 import { SmartLink } from './smart-link';
 import { Stamp } from './stamp';
 
 export function LeadStory({ project }: { project: Project }) {
-  const winner = /winner|first place/i.test(project.credit);
+  const winner = isWinner(project);
   return (
     <article className="border-b border-ink pb-6 lg:border-b-0 lg:border-r lg:pb-0 lg:pr-6">
       <p className="font-label text-sm font-semibold uppercase tracking-[0.25em] text-accent">

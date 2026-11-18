@@ -16,7 +16,7 @@ describe('FrontPage', () => {
     expect(screen.getByRole('main')).toBeInTheDocument();
     expect(screen.getByRole('contentinfo')).toHaveTextContent('Printed in Hyderabad');
     expect(
-      screen.getByRole('heading', { level: 2, name: 'Quantum Portfolio Optimization' }),
+      screen.getByRole('heading', { level: 2, name: 'Loan Reconciliation Agent' }),
     ).toBeInTheDocument();
     for (const name of [
       about.headline,
@@ -39,6 +39,7 @@ describe('FrontPage', () => {
     const hrefs = screen.getAllByRole('link').map((a) => a.getAttribute('href'));
     expect(hrefs).toContain('#contact');
     expect(hrefs).toContain('#files');
+    expect(hrefs).toContain('/work/fineract-loan-reconciliation');
     expect(hrefs).toContain('/work/qiskit-portfolio-optimization');
   });
 
@@ -50,7 +51,7 @@ describe('FrontPage', () => {
     for (let i = 0; i < order.length - 1; i++) {
       expect(order[i].compareDocumentPosition(order[i + 1]) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     }
-    const lead = screen.getByRole('heading', { level: 2, name: 'Quantum Portfolio Optimization' });
+    const lead = screen.getByRole('heading', { level: 2, name: 'Loan Reconciliation Agent' });
     expect(order[0].compareDocumentPosition(lead) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(lead.compareDocumentPosition(order[1]) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });

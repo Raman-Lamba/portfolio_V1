@@ -21,6 +21,7 @@ describe('project details', () => {
   });
   it('covers the lead and the front-page stories', () => {
     for (const slug of [
+      'fineract-loan-reconciliation',
       'qiskit-portfolio-optimization',
       'gold-price-forecasting',
       'options-strategy-simulator',

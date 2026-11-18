@@ -4,14 +4,14 @@ import { projects } from './projects';
 
 describe('queries', () => {
   it('returns the lead project', () => {
-    expect(getLead().slug).toBe('qiskit-portfolio-optimization');
+    expect(getLead().slug).toBe('fineract-loan-reconciliation');
   });
   it('returns three front-page stories, none of them the lead', () => {
     const stories = getStories();
     expect(stories.map((s) => s.slug)).toEqual([
+      'qiskit-portfolio-optimization',
       'gold-price-forecasting',
       'options-strategy-simulator',
-      'trade-simulator',
     ]);
     expect(stories.some((s) => s.lead)).toBe(false);
   });

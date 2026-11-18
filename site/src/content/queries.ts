@@ -4,13 +4,16 @@ import { projectDetails } from './details';
 import { projectFigures } from './figures';
 import { sections, type Ad, type Project, type ProjectDetails, type ProjectFigure, type Section } from './types';
 
-const STORY_SLUGS = ['gold-price-forecasting', 'options-strategy-simulator', 'trade-simulator'];
+const STORY_SLUGS = ['qiskit-portfolio-optimization', 'gold-price-forecasting', 'options-strategy-simulator'];
 
 function bySlug(slug: string): Project {
   const p = projects.find((x) => x.slug === slug);
   if (!p) throw new Error(`Unknown project slug: ${slug}`);
   return p;
 }
+
+// A project that won something gets the "Winner" stamp wherever it appears on the front page.
+export const isWinner = (p: Project) => /winner|first place/i.test(p.credit);
 
 export function getLead(): Project {
   const p = projects.find((x) => x.lead);

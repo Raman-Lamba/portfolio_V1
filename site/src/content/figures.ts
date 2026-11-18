@@ -1,6 +1,16 @@
 import type { ProjectFigure } from './types';
 
 export const projectFigures: Record<string, ProjectFigure[]> = {
+  'fineract-loan-reconciliation': [
+    {
+      src: '/images/projects/reconciliation-connect.png',
+      alt: "Connect tab of the reconciliation page: Fineract API address, tenant, user and bank, then country, currency, the partner bank's 80% share, date order and number format.",
+      caption:
+        "Connect tab: point the agent at a Fineract server, choose the bank and set the partner bank's share. Next come the Statement, Run and Review tabs.",
+      width: 2000,
+      height: 1004,
+    },
+  ],
   'options-strategy-simulator': [
     {
       src: '/images/projects/options-simulator-result.png',

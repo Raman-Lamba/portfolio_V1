@@ -28,6 +28,7 @@ describe('project figures', () => {
   });
   it('covers the screenshot projects and names nothing private', () => {
     for (const slug of [
+      'fineract-loan-reconciliation',
       'options-strategy-simulator',
       'qiskit-portfolio-optimization',
       'gold-price-forecasting',

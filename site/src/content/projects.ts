@@ -2,6 +2,22 @@ import type { Project } from './types';
 
 export const projects: Project[] = [
   {
+    slug: 'fineract-loan-reconciliation',
+    title: 'Loan Reconciliation Agent',
+    kicker: 'Finance · AI agent',
+    deck: "An agent that matches a lender's bank payments to loans in Apache Fineract, posts the clear ones, splits each with the partner bank and sends the unclear ones to a person.",
+    sections: ['finance', 'ml-ai'],
+    credit: 'Solo project',
+    year: 2026,
+    source: 'https://github.com/Raman-Lamba/fineract-loan-reconciliation-AI-supported-agent',
+    lead: true,
+    metrics: [
+      { value: '0 of 1,348', label: 'wrong auto-postings (synthetic data)' },
+      { value: '273', label: 'unclear lines sent to a person' },
+      { value: '438', label: 'automated tests' },
+    ],
+  },
+  {
     slug: 'qiskit-portfolio-optimization',
     title: 'Quantum Portfolio Optimization',
     kicker: 'Finance · Quantum',
@@ -10,7 +26,6 @@ export const projects: Project[] = [
     credit: 'Solo entry · Winner, Qiskit Fall Fest 2026',
     year: 2026,
     source: 'https://github.com/Raman-Lamba/qiskit',
-    lead: true,
     metrics: [
       { value: '3.7-20x', label: 'vs penalty QAOA (12 stocks)' },
       { value: '184,756', label: 'portfolios brute-forced (20 stocks)' },
