@@ -10,7 +10,7 @@ export const site = {
   linkedin: 'https://www.linkedin.com/in/raman-lamba/',
   github: 'https://github.com/Raman-Lamba',
   photo: '/images/raman.jpg',
-  // Halftone version of the portrait, generated from the photo for the printed look.
-  portrait: { src: '/images/raman-engraved.png', width: 600, height: 857 },
+  // Ink-on-paper duotone of the photo (lighter than a halftone, so the face reads warm and clear).
+  portrait: { src: '/images/raman-portrait.png', width: 600, height: 857 },
   resumePdf: '/resume/RamanLamba_Resume_Fintech.pdf',
 } as const;
