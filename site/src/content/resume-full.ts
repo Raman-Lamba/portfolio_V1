@@ -27,7 +27,7 @@ export const resumeFull = {
       role: 'Developer (startup)',
       dates: 'Jun 2025',
       bullets: [
-        'Built backend for an AI job-candidate matching system (TypeScript, embeddings, Qdrant vector search); fixed the matching API response format.',
+        "Built the backend for an AI job-candidate matching system (TypeScript, embeddings, Qdrant) with field weights so certifications compare in the right place; 0.7 match-relevance score on company data, beating keyword search.",
       ],
     },
     {
