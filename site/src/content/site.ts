@@ -10,7 +10,7 @@ export const site = {
   linkedin: 'https://www.linkedin.com/in/raman-lamba/',
   github: 'https://github.com/Raman-Lamba',
   photo: '/images/raman.jpg',
-  // Ink-on-paper duotone of the photo (lighter than a halftone, so the face reads warm and clear).
-  portrait: { src: '/images/raman-portrait.png', width: 600, height: 857 },
+  // The photo in muted colour: warm, and the brick echoes the burnt call-to-action colour.
+  portrait: { src: '/images/raman-portrait.jpg', width: 600, height: 857 },
   resumePdf: '/resume/RamanLamba_Resume_Fintech.pdf',
 } as const;

@@ -17,7 +17,7 @@ describe('Intro', () => {
     expect(screen.getByRole('heading', { level: 2, name: about.headline })).toBeInTheDocument();
     expect(screen.getByRole('img', { name: 'Portrait of Raman Lamba' })).toHaveAttribute(
       'src',
-      expect.stringContaining('raman-portrait.png'),
+      expect.stringContaining('raman-portrait.jpg'),
     );
     for (const p of about.paragraphs) expect(screen.getByText(p)).toBeInTheDocument();
     expect(screen.getByText(about.pullQuote)).toBeInTheDocument();
