@@ -8,6 +8,6 @@ describe('Classifieds', () => {
     render(<Classifieds />);
     expect(screen.getByRole('heading', { level: 2, name: 'Classifieds' })).toBeInTheDocument();
     expect(screen.getAllByRole('article')).toHaveLength(classifieds.length);
-    expect(screen.getByText(/GPA 9\.14/)).toBeInTheDocument();
+    expect(screen.getByText(/GPA 8\.99/)).toBeInTheDocument();
   });
 });

@@ -6,7 +6,7 @@ export const resumeFull = {
   education: [
     {
       school: 'Institute of Management Technology Hyderabad',
-      detail: 'PGDM, Finance (GPA 9.14)',
+      detail: 'PGDM, Finance (GPA 8.99)',
       dates: 'Jul 2025 - Mar 2027',
     },
     { school: 'CRSSIET, NCR', detail: 'B.Tech, Computer Science (82.22%)', dates: 'Jul 2021 - Jun 2025' },
@@ -17,9 +17,10 @@ export const resumeFull = {
       role: 'Summer Intern, Private Credit (Gurugram)',
       dates: 'Apr - Jun 2026',
       bullets: [
-        "Analysed, modelled and onboarded 2 private credit deals (AUM > $100M) onto Oxane's native platform, validating deal data and documents so both went live with accurate data.",
-        'Designed and built an automated covenant-monitoring alert system with double-step verification for early breach detection and escalation.',
-        'Built a metadata-driven data architecture that cut manual configuration in deal onboarding and improved data integrity and traceability.',
+        "Two private credit deals (AUM > $100M) had to go live on Oxane's platform: analysed and modelled both and validated their data and documents, so both launched with accurate data.",
+        'To catch covenant breaches early, designed and built an automated alert system with double-step verification that flags likely breaches and escalates them.',
+        'Deal onboarding needed manual configuration for every deal: built a metadata-driven data architecture that cut it and improved data integrity and traceability.',
+        'Kept platform data trustworthy by querying, reconciling and validating large deal and portfolio datasets daily with advanced SQL and Excel.',
       ],
     },
     {
@@ -27,7 +28,7 @@ export const resumeFull = {
       role: 'Developer (startup)',
       dates: 'Jun 2025',
       bullets: [
-        "Built the backend for an AI job-candidate matching system (TypeScript, embeddings, Qdrant) with field weights so certifications compare in the right place; 0.7 match-relevance score on company data, beating keyword search.",
+        'Replaced keyword search in a job-candidate matcher: built an AI backend (TypeScript, embeddings, Qdrant) with field weights so certifications compare in the right place; 0.7 match-relevance score on company data.',
       ],
     },
     {
@@ -35,7 +36,7 @@ export const resumeFull = {
       role: 'Teaching Assistant (Delhi)',
       dates: 'Aug 2024 - Feb 2025',
       bullets: [
-        'Solved student doubts on DSA problems in twice-weekly sessions, assisted students in interviews, reviewed 500+ practice problems and ran 24+ extra concept sessions.',
+        'Supported DSA students through twice-weekly doubt sessions: reviewed 500+ practice problems, ran 24+ extra concept sessions and helped students prepare for interviews.',
       ],
     },
   ] satisfies ResumeEntry[],
@@ -50,7 +51,7 @@ export const resumeFull = {
       role: 'Python, Apache Fineract, MCP',
       dates: 'Nov 2026',
       bullets: [
-        'AI agent that matches bank payments to loans in Apache Fineract, posts clear ones with a co-lending split and queues unclear ones for a person, with an audit log; 0 wrong of 1,348 auto-postings (synthetic data).',
+        'Lenders match bank payments to loans by hand in Excel: built an AI agent that matches them in Apache Fineract, posts clear ones with a co-lending split and queues unclear ones for a person; 0 wrong of 1,348 auto-postings (synthetic data).',
       ],
     },
     {
@@ -58,7 +59,7 @@ export const resumeFull = {
       role: 'Qiskit, Python',
       dates: '2026',
       bullets: [
-        'Chose 10 of 20 stocks under a sector cap, verified against brute force on 184,756 portfolios; a constraint-preserving mixer beat penalty-based QAOA by 3.7-20x (12 stocks); ran on IBM ibm_fez hardware.',
+        'Picking 10 of 20 stocks under a sector cap: a constraint-preserving QAOA mixer beat penalty-based QAOA by 3.7-20x (12 stocks), checked by brute force on 184,756 portfolios and run on IBM ibm_fez hardware.',
       ],
     },
     {
@@ -66,7 +67,7 @@ export const resumeFull = {
       role: 'PyTorch, time series',
       dates: 'Mar 2026',
       bullets: [
-        'Probabilistic CNN-LSTM on 3,939 trading days, 9 macro indicators and 45+ features: 54-58% directional accuracy on 5-day forecasts; a risk-based strategy backtested at an 18% return.',
+        'To forecast gold with its uncertainty, built a probabilistic CNN-LSTM on 3,939 trading days and 9 macro indicators: 54-58% directional accuracy at 5 days; a risk-based strategy backtested at an 18% return.',
       ],
     },
     {
@@ -74,7 +75,7 @@ export const resumeFull = {
       role: 'Excel, IMT Hyderabad',
       dates: 'Sep 2026',
       bullets: [
-        'FCFF DCF (WACC 13.7%), two-stage DDM and peer multiples vs Berger Paints and Kansai Nerolac; intrinsic value Rs 586/share vs CMP ~Rs 2,580, concluding the stock was overvalued.',
+        "Tested whether Asian Paints' price was justified: FCFF DCF (WACC 13.7%), two-stage DDM and peer multiples gave Rs 586/share against a CMP of ~Rs 2,580, so the stock was overvalued.",
       ],
     },
     {
@@ -82,7 +83,7 @@ export const resumeFull = {
       role: 'Python, Supabase, Next.js',
       dates: 'Aug 2026',
       bullets: [
-        'Game on real NSE F&O data (2019-2024): computes realized P&L for 10 strategies per scenario, with a regime-stratified scenario pool.',
+        'Options strategies are hard to learn from textbooks: built a game on real NSE F&O data (2019-2024) that shows realized P&L for all 10 strategies per round, across market regimes.',
       ],
     },
   ] satisfies ResumeEntry[],

@@ -89,7 +89,7 @@ export default function ForAgentsPage() {
             <dt className="font-label uppercase tracking-widest">Based in</dt>
             <dd>{site.location}, India</dd>
             <dt className="font-label uppercase tracking-widest">Studying</dt>
-            <dd>MBA (Finance), IMT Hyderabad, 2025-2027 (GPA 9.14)</dd>
+            <dd>MBA (Finance), IMT Hyderabad, 2025-2027 (GPA 8.99)</dd>
             <dt className="font-label uppercase tracking-widest">Degree</dt>
             <dd>B.Tech, Computer Science, CRSSIET (2021-2025)</dd>
             <dt className="font-label uppercase tracking-widest">Looking for</dt>

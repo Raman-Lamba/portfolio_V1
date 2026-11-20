@@ -40,7 +40,7 @@ export const agents = {
   faq: [
     {
       q: 'Who is Raman Lamba?',
-      a: 'A fintech engineer in Hyderabad, India: MBA (Finance) candidate at IMT Hyderabad (GPA 9.14, 2025-2027) with a B.Tech in Computer Science. He builds machine-learning models, simulators and data tools for finance.',
+      a: 'A fintech engineer in Hyderabad, India: MBA (Finance) candidate at IMT Hyderabad (GPA 8.99, 2025-2027) with a B.Tech in Computer Science. He builds machine-learning models, simulators and data tools for finance.',
     },
     {
       q: 'Can Raman Lamba build AI systems for finance?',

@@ -13,7 +13,7 @@ export const classifieds: Classified[] = [
     id: 'wanted',
     heading: 'Situations Wanted',
     lead: 'FINTECH ENGINEER.',
-    body: 'MBA (Finance), IMT Hyderabad, GPA 9.14; B.Tech Computer Science. Builds models, simulators and data tools. Private credit, valuation, ML. Open to freelance and full-time roles.',
+    body: 'MBA (Finance), IMT Hyderabad, GPA 8.99; B.Tech Computer Science. Builds models, simulators and data tools. Private credit, valuation, ML. Open to freelance and full-time roles.',
   },
   {
     id: 'skills',
